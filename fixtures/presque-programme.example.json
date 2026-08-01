@@ -1,0 +1,50 @@
+{
+  "activities": [
+    {
+      "id": "presque-dnd-001",
+      "title": "Donjons & Dragons — La Mine de Phandelver",
+      "room": "JDR Cheminee 1",
+      "start": "2026-11-14T10:00:00+01:00",
+      "end": "2026-11-14T14:00:00+01:00",
+      "max_participants": 5,
+      "description": "Une campagne D&D 5e pour debutant·e·s. Personnages pre-tires fournis.",
+      "organizer": "Jilian",
+      "image_path": "",
+      "image_copyright": ""
+    },
+    {
+      "id": "presque-jds-002",
+      "title": "Soiree jeux de societe — Decouverte",
+      "room": "Salle principale",
+      "start": "2026-11-14T18:00:00+01:00",
+      "end": "2026-11-14T23:00:00+01:00",
+      "max_participants": 16,
+      "description": "Soiree jeux de societe en libre-service, avec accompagnement.",
+      "organizer": "Marina",
+      "image_path": "",
+      "image_copyright": ""
+    },
+    {
+      "id": "presque-tournoi-003",
+      "title": "Tournoi de Carcassonne",
+      "room": "Scene",
+      "start": "2026-11-15T14:00:00+01:00",
+      "end": "2026-11-15T18:00:00+01:00",
+      "max_participants": 8,
+      "description": "Tournoi amical ouvert a tou·te·s, debutant·e·s bienvenu·e·s.",
+      "organizer": "Sam",
+      "image_path": "",
+      "image_copyright": ""
+    }
+  ],
+  "rooms": [
+    "JDR Cheminee 1",
+    "JDR Cheminee 2",
+    "JDR Cheminee Cache 1",
+    "JDR Cheminee Cache 2",
+    "JDR Cheminee Couloi 1",
+    "JDR Cheminee Couloir 2",
+    "Salle principale",
+    "Scene"
+  ]
+}

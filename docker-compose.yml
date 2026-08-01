@@ -1,0 +1,10 @@
+services:
+  api:
+    build: .
+    container_name: abordajeux_api
+    env_file: .env
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/data
