@@ -5,7 +5,12 @@ import httpx
 from app import db as db_mod
 from app import signups
 from app.config import load_settings
-from app.email import SENDER_NAME, BrevoSender, build_promotion_email
+from app.email import (
+    SENDER_NAME,
+    MailSender,
+    ResendSender,
+    build_promotion_email,
+)
 
 _DELETE_EXPIRED_SQL = ("DELETE FROM signups WHERE confirmed_at IS NULL "
                        "AND created_at <= datetime('now', '-24 hours')")
@@ -16,7 +21,7 @@ def purge_expired(conn: sqlite3.Connection) -> int:
     return cursor.rowcount
 
 
-def _send_promotion(sender: BrevoSender, promotion: signups.Promotion) -> None:
+def _send_promotion(sender: MailSender, promotion: signups.Promotion) -> None:
     sender.send(to_email=promotion.contact_email,
                 content=build_promotion_email(
                     activity_title=promotion.activity_title,
@@ -31,7 +36,7 @@ def main() -> int:
         db_mod.init_schema(conn)
         deleted = purge_expired(conn)
         with httpx.Client(timeout=10.0) as client:
-            sender = BrevoSender(
+            sender = ResendSender(
                 client,
                 api_key=settings.mail_api_key,
                 sender_email=settings.mail_sender,

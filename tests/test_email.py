@@ -140,9 +140,86 @@ def test_build_waitlist_email_escapes_html() -> None:
     assert "&amp;b=c" in content.html
 
 
-def test_mail_sender_posts_to_brevo() -> None:
+def test_build_contact_form_email_contains_fields() -> None:
+    content = email.build_contact_form_email(
+        subject="Question sur les Presques 24h",
+        sender_email="visitor@example.com",
+        message="Bonjour,\nEst-ce que le programme est définitif ?",
+    )
+
+    assert content.subject == "Formulaire de contact — Question sur les Presques 24h"
+
+    for phrase in (
+            "Nouveau message via le formulaire de contact",
+            "Sujet : Question sur les Presques 24h",
+            "Email : visitor@example.com",
+            "Est-ce que le programme est définitif ?",
+    ):
+        assert phrase in content.text
+
+    assert "Question sur les Presques 24h" in content.html
+    assert 'href="mailto:visitor@example.com"' in content.html
+    assert "Bonjour,<br>Est-ce que le programme est définitif ?" in content.html
+    assert content.html.count("<p>") == content.html.count("</p>")
+
+
+def test_build_contact_form_email_escapes_html() -> None:
+    content = email.build_contact_form_email(
+        subject="<script>s</script>",
+        sender_email="v@example.ch",
+        message="<b>bold</b> & more",
+    )
+
+    assert "&lt;script&gt;s&lt;/script&gt;" in content.html
+    assert "<script>" not in content.html
+    assert "&lt;b&gt;bold&lt;/b&gt; &amp; more" in content.html
+    assert "<b>bold</b>" not in content.html
+
+
+def test_build_feedback_form_email_contains_fields() -> None:
+    content = email.build_feedback_form_email(
+        event="Soirée jeu du mercredi",
+        sender_email="visitor@example.com",
+        message="Super soirée, merci !",
+        planning_rating=4,
+        welcome_rating=5,
+    )
+
+    assert content.subject == "Retour sur un événement — Soirée jeu du mercredi"
+
+    for phrase in (
+            "Nouveau retour sur un événement",
+            "Événement : Soirée jeu du mercredi",
+            "Email : visitor@example.com",
+            "Accueil : 5/5",
+            "Organisation : 4/5",
+            "Super soirée, merci !",
+    ):
+        assert phrase in content.text
+
+    assert "Soirée jeu du mercredi" in content.html
+    assert "Accueil :</strong> 5/5" in content.html
+    assert "Organisation :</strong> 4/5" in content.html
+    assert content.html.count("<p>") == content.html.count("</p>")
+
+
+def test_build_feedback_form_email_escapes_html() -> None:
+    content = email.build_feedback_form_email(
+        event="<i>event</i>",
+        sender_email="v@example.ch",
+        message="<script>m</script>",
+        planning_rating=1,
+        welcome_rating=2,
+    )
+
+    assert "&lt;i&gt;event&lt;/i&gt;" in content.html
+    assert "&lt;script&gt;m&lt;/script&gt;" in content.html
+    assert "<script>" not in content.html
+
+
+def test_mail_sender_posts_to_resend() -> None:
     client = _StubClient()
-    sender = email.BrevoSender(
+    sender = email.ResendSender(
         client,  # type: ignore[arg-type]  # test stub replaces the injected httpx.Client (no network)
         api_key="key-123",
         sender_email="noreply@abordajeux.ch",
@@ -155,15 +232,32 @@ def test_mail_sender_posts_to_brevo() -> None:
     assert len(client.calls) == 1
     url, headers, body = client.calls[0]
     assert url == email.MAIL_URL
-    assert headers["api-key"] == "key-123"
-    assert body["sender"] == {
-        "name": "À L'Abordajeux",
-        "email": "noreply@abordajeux.ch"
-    }
-    assert body["to"] == [{"email": "player@example.com"}]
+    assert headers["Authorization"] == "Bearer key-123"
+    assert body["from"] == "À L'Abordajeux <noreply@abordajeux.ch>"
+    assert body["to"] == ["player@example.com"]
     assert body["subject"] == "s"
-    assert body["htmlContent"] == "<p>h</p>"
-    assert body["textContent"] == "t"
+    assert body["html"] == "<p>h</p>"
+    assert body["text"] == "t"
+    assert "reply_to" not in body
+
+
+def test_mail_sender_includes_reply_to_when_given() -> None:
+    client = _StubClient()
+    sender = email.ResendSender(
+        client,  # type: ignore[arg-type]  # test stub replaces the injected httpx.Client (no network)
+        api_key="key-123",
+        sender_email="noreply@abordajeux.ch",
+        sender_name="À L'Abordajeux",
+    )
+
+    sender.send(
+        to_email="contact@abordajeux.ch",
+        content=email.EmailContent(subject="s", html="h", text="t"),
+        reply_to="visitor@example.com",
+    )
+
+    _, _, body = client.calls[0]
+    assert body["reply_to"] == "visitor@example.com"
 
 
 def test_mail_sender_propagates_http_errors() -> None:
@@ -171,7 +265,7 @@ def test_mail_sender_propagates_http_errors() -> None:
     response = httpx.Response(500, request=request)
     client = _StubClient(raise_exc=httpx.HTTPStatusError(
         "boom", request=request, response=response))
-    sender = email.BrevoSender(
+    sender = email.ResendSender(
         client,  # type: ignore[arg-type]  # test stub replaces the injected httpx.Client (no network)
         api_key="k",
         sender_email="noreply@abordajeux.ch",

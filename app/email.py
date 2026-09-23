@@ -7,7 +7,7 @@ import httpx
 from dns import resolver as dns_resolver
 from dns.exception import DNSException
 
-MAIL_URL = "https://api.brevo.com/v3/smtp/email"
+MAIL_URL = "https://api.resend.com/emails"
 SENDER_NAME = "À L'Abordajeux"
 SUBJECT = "Confirmez votre inscription — Presques 24h du Jeu"
 WAITLIST_SUBJECT = "Vous êtes sur la liste d'attente — Presques 24h du Jeu"
@@ -163,13 +163,87 @@ L'équipage de À L'abordajeux
     return EmailContent(subject=subject, html=body, text=text)
 
 
+def build_contact_form_email(
+    *,
+    subject: str,
+    sender_email: str,
+    message: str,
+) -> EmailContent:
+    safe_subject = html.escape(subject)
+    safe_sender = html.escape(sender_email)
+    safe_message = html.escape(message).replace("\n", "<br>")
+    full_subject = f"Formulaire de contact — {subject}"
+
+    text = f"""
+Nouveau message via le formulaire de contact du site.
+
+Sujet : {subject}
+Email : {sender_email}
+
+Message :
+{message}
+    """
+
+    body = f"""
+<p>Nouveau message via le formulaire de contact du site.</p>
+<p><strong>Sujet :</strong> {safe_subject}</p>
+<p><strong>Email :</strong> <a href="mailto:{safe_sender}">{safe_sender}</a></p>
+<p><strong>Message :</strong></p>
+<p>{safe_message}</p>
+    """
+
+    return EmailContent(subject=full_subject, html=body, text=text)
+
+
+def build_feedback_form_email(
+    *,
+    event: str,
+    sender_email: str,
+    message: str,
+    planning_rating: int,
+    welcome_rating: int,
+) -> EmailContent:
+    safe_event = html.escape(event)
+    safe_sender = html.escape(sender_email)
+    safe_message = html.escape(message).replace("\n", "<br>")
+    subject = f"Retour sur un événement — {event}"
+
+    text = f"""
+Nouveau retour sur un événement via le formulaire du site.
+
+Événement : {event}
+Email : {sender_email}
+Accueil : {welcome_rating}/5
+Organisation : {planning_rating}/5
+
+Message :
+{message}
+    """
+
+    body = f"""
+<p>Nouveau retour sur un événement via le formulaire du site.</p>
+<p><strong>Événement :</strong> {safe_event}</p>
+<p><strong>Email :</strong> <a href="mailto:{safe_sender}">{safe_sender}</a></p>
+<p><strong>Accueil :</strong> {welcome_rating}/5</p>
+<p><strong>Organisation :</strong> {planning_rating}/5</p>
+<p><strong>Message :</strong></p>
+<p>{safe_message}</p>
+    """
+
+    return EmailContent(subject=subject, html=body, text=text)
+
+
 class MailSender(Protocol):
 
-    def send(self, *, to_email: str, content: EmailContent) -> None:
+    def send(self,
+             *,
+             to_email: str,
+             content: EmailContent,
+             reply_to: str | None = None) -> None:
         ...
 
 
-class BrevoSender:
+class ResendSender:
 
     def __init__(self, client: httpx.Client, *, api_key: str,
                  sender_email: str, sender_name: str) -> None:
@@ -178,25 +252,27 @@ class BrevoSender:
         self._sender_email = sender_email
         self._sender_name = sender_name
 
-    def send(self, *, to_email: str, content: EmailContent) -> None:
+    def send(self,
+             *,
+             to_email: str,
+             content: EmailContent,
+             reply_to: str | None = None) -> None:
+        payload: dict = {
+            "from": f"{self._sender_name} <{self._sender_email}>",
+            "to": [to_email],
+            "subject": content.subject,
+            "html": content.html,
+            "text": content.text,
+        }
+        if reply_to is not None:
+            payload["reply_to"] = reply_to
         response = self._client.post(
             MAIL_URL,
             headers={
-                "api-key": self._api_key,
+                "Authorization": f"Bearer {self._api_key}",
                 "Content-Type": "application/json"
             },
-            json={
-                "sender": {
-                    "name": self._sender_name,
-                    "email": self._sender_email
-                },
-                "to": [{
-                    "email": to_email
-                }],
-                "subject": content.subject,
-                "htmlContent": content.html,
-                "textContent": content.text,
-            },
+            json=payload,
         )
         response.raise_for_status()
 

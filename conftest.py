@@ -21,10 +21,14 @@ def db() -> Iterator[sqlite3.Connection]:
 class _StubSender:
 
     def __init__(self) -> None:
-        self.calls: list[tuple[str, EmailContent]] = []
+        self.calls: list[tuple[str, EmailContent, str | None]] = []
 
-    def send(self, *, to_email: str, content: EmailContent) -> None:
-        self.calls.append((to_email, content))
+    def send(self,
+             *,
+             to_email: str,
+             content: EmailContent,
+             reply_to: str | None = None) -> None:
+        self.calls.append((to_email, content, reply_to))
 
 
 @pytest.fixture()

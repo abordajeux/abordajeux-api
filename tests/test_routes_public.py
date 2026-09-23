@@ -54,7 +54,7 @@ def _signup_row(application,
 
 
 def _extract_token(calls: list[tuple]) -> str:
-    _, content = calls[-1]
+    _, content, _ = calls[-1]
     return content.text.split("?token=")[1].split()[0]
 
 
@@ -123,8 +123,9 @@ def test_signup_ok_sends_email_and_reserves(api) -> None:
     assert "player@example.com" in body["message"]
 
     assert len(stub.calls) == 1
-    to_email, content = stub.calls[0]
+    to_email, content, reply_to = stub.calls[0]
     assert to_email == "player@example.com"
+    assert reply_to is None
     assert content.subject == email.SUBJECT
     assert "D&D — La Mine de Phandelver" in content.text
     assert "?token=" in content.text
@@ -351,7 +352,7 @@ def test_signup_full_individual_joins_waitlist(api) -> None:
     assert "liste d'attente" in body["message"]
 
     assert len(stub.calls) == 1
-    to_email, content = stub.calls[0]
+    to_email, content, _ = stub.calls[0]
     assert to_email == "player@example.com"
     assert content.subject == email.WAITLIST_SUBJECT
     assert "liste d'attente" in content.text

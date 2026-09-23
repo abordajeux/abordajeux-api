@@ -20,6 +20,9 @@ from app.email import MailSender
 from app.schemas import (
     ActivitySignups,
     CapacityExceeded,
+    ContactFormRequest,
+    FeedbackFormRequest,
+    FormOk,
     SignupOk,
     SignupRequest,
     VerifyConfirmed,
@@ -38,6 +41,9 @@ WAITLISTED_MSG = (
     "Cette activité est complète : vous avez été ajouté·e à la liste d'attente. "
     "Un email de confirmation vous a été envoyé à {email}.")
 SIGNUP_OK_MSG = "Un email de confirmation a été envoyé à {email}."
+FORM_OK_MSG = (
+    "Votre message a bien été envoyé à l'équipe de À L'Abordajeux. "
+    "Nous vous répondrons dès que possible.")
 
 
 class APIError(Exception):
@@ -84,7 +90,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         conn.close()
     http_client = httpx.Client(timeout=10.0)
     app.state.http_client = http_client
-    app.state.mail_sender = email.BrevoSender(
+    app.state.mail_sender = email.ResendSender(
         http_client,
         api_key=settings.mail_api_key,
         sender_email=settings.mail_sender,
@@ -159,10 +165,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                                pending=result.pending,
                                waitlisted=result.waitlisted)
 
-    signup_rate = f"1/{settings.rate_limit_seconds}seconds"
+    post_rate = f"1/{settings.rate_limit_seconds}seconds"
 
     @app.post("/activities/{activity_id}/signup", response_model=SignupOk)
-    @limiter.limit(signup_rate)
+    @limiter.limit(post_rate)
     def signup(
         request: Request,
         activity_id: str,
@@ -237,6 +243,48 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise APIError(410, {"status": "expired"})
         return VerifyConfirmed(activity_id=outcome.activity_id or "",
                                waitlisted=outcome.waitlisted)
+
+    @app.post("/forms/contact", response_model=FormOk)
+    @limiter.limit(post_rate)
+    def submit_contact_form(
+        request: Request,
+        body: ContactFormRequest,
+        sender: Annotated[MailSender, Depends(get_mail_sender)],
+        settings: Annotated[Settings, Depends(get_settings)],
+    ) -> FormOk:
+        content = email.build_contact_form_email(
+            subject=body.subject,
+            sender_email=str(body.sender_email),
+            message=body.message,
+        )
+        sender.send(
+            to_email=settings.mail_contact_email,
+            content=content,
+            reply_to=str(body.sender_email),
+        )
+        return FormOk(message=FORM_OK_MSG)
+
+    @app.post("/forms/feedback", response_model=FormOk)
+    @limiter.limit(post_rate)
+    def submit_feedback_form(
+        request: Request,
+        body: FeedbackFormRequest,
+        sender: Annotated[MailSender, Depends(get_mail_sender)],
+        settings: Annotated[Settings, Depends(get_settings)],
+    ) -> FormOk:
+        content = email.build_feedback_form_email(
+            event=body.event,
+            sender_email=str(body.sender_email),
+            message=body.message,
+            planning_rating=body.planning_rating,
+            welcome_rating=body.welcome_rating,
+        )
+        sender.send(
+            to_email=settings.mail_contact_email,
+            content=content,
+            reply_to=str(body.sender_email),
+        )
+        return FormOk(message=FORM_OK_MSG)
 
     return app
 

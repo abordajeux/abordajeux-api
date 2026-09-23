@@ -14,6 +14,8 @@ CORS-restricted JSON endpoints.
 | GET | `/activities/{id}` | none | one activity's counts |
 | POST | `/activities/{id}/signup` | rate-limited 1/30s/IP (keyed on `CF-Connecting-IP`) | anonymous signup (≤ 10 participants, names ≤ 50 chars; waiting list capped at `max_participants`) |
 | POST | `/verify` | none | double opt-in confirmation — token in the JSON body so it stays out of URL logs; POST-only so email link scanners can't auto-confirm (the static verify page issues the call) |
+| POST | `/forms/contact` | rate-limited (same knob as signup) | contact-form intake — sanitized, emailed to `MAIL_CONTACT_EMAIL` with the submitter as `reply_to`; no DB |
+| POST | `/forms/feedback` | rate-limited (same knob as signup) | event-feedback intake (event + message + two 0–5 ratings) — same sanitize-and-email flow |
 
 ## Deploy (Docker on the Pi)
 
@@ -36,12 +38,12 @@ manual `mkdir`.
 
 | Variable | Purpose |
 |----------|---------|
-| `MAIL_API_KEY` | API key from the Brevo (or future mail provider) account |
+| `MAIL_API_KEY` | API key from the Resend account (mail sending is provider-agnostic in code) |
 | `CORS_ORIGINS` | allowed origin, `https://abordajeux.github.io` — no wildcard |
 | `DATABASE_PATH` | SQLite file path; keep under `/app/data` (bind-mounted) |
-| `MAIL_SENDER` | sender email for outgoing mail |
-| `MAIL_CONTACT_EMAIL` | support address rendered in email bodies |
-| `RATE_LIMIT_SECONDS` | minimum seconds between signups per IP |
+| `MAIL_SENDER` | sender email for outgoing mail (must be on a Resend-verified domain) |
+| `MAIL_CONTACT_EMAIL` | association inbox — quoted in signup emails and the recipient of form submissions |
+| `RATE_LIMIT_SECONDS` | minimum seconds between POSTs (signup + form endpoints) per IP |
 | `VERIFY_BASE_URL` | static site's verify page; the API appends `?token=…` |
 
 ### Verify the deployment
@@ -79,6 +81,15 @@ from the JSON are never deleted (manual DB access on the Pi for removals).
 
 Promotion emails are at-least-once: a failed send is retried on the next hourly run (the seat is
 kept either way).
+
+## Form intake (`/forms/*`)
+
+`POST /forms/contact` (`{subject, sender_email, message}`) and `POST /forms/feedback`
+(`{event, sender_email, message, planning_rating, welcome_rating}`) relay site forms to the
+association inbox (`MAIL_CONTACT_EMAIL`) with the submitter's address as `reply_to`. Nothing is
+stored: validation (Pydantic bounds, `EmailStr`), control-character stripping (single-line fields
+lose all C0/C1 chars — no email-header injection; messages keep newlines), then an HTML-escaped
+fr-FR email body. The same `RATE_LIMIT_SECONDS` window applies per form endpoint and per IP.
 
 ## Operations
 
