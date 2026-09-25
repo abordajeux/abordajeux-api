@@ -10,6 +10,7 @@ CORS-restricted JSON endpoints.
 | Method | Path | Auth | Purpose |
 |--------|------|------|---------|
 | GET | `/health` | none | container healthcheck |
+| GET | `/schedule` | none, `Cache-Control: max-age=300` | the programme JSON **verbatim** — the same file that seeds the DB; the site's single source for the program |
 | GET | `/activities` | none | capacity counts (confirmed / pending / waitlisted) |
 | GET | `/activities/{id}` | none | one activity's counts |
 | POST | `/activities/{id}/signup` | rate-limited 1/30s/IP (keyed on `CF-Connecting-IP`) | anonymous signup (≤ 10 participants, names ≤ 50 chars; waiting list capped at `max_participants`) |
@@ -41,9 +42,11 @@ manual `mkdir`.
 | `MAIL_API_KEY` | API key from the Resend account (mail sending is provider-agnostic in code) |
 | `CORS_ORIGINS` | allowed origin, `https://abordajeux.github.io` — no wildcard |
 | `DATABASE_PATH` | SQLite file path; keep under `/app/data` (bind-mounted) |
+| `PROGRAMME_PATH` | programme JSON — served by `GET /schedule` and auto-seeded at startup; keep under `/app/data` |
 | `MAIL_SENDER` | sender email for outgoing mail (must be on a Resend-verified domain) |
 | `MAIL_CONTACT_EMAIL` | association inbox — quoted in signup emails and the recipient of form submissions |
 | `RATE_LIMIT_SECONDS` | minimum seconds between POSTs (signup + form endpoints) per IP |
+| `MAX_BODY_BYTES` | request-body cap (413 before parsing); 64 KB ≈ 10× the largest legit payload |
 | `VERIFY_BASE_URL` | static site's verify page; the API appends `?token=…` |
 
 ### Verify the deployment
@@ -56,18 +59,31 @@ curl http://127.0.0.1:8000/activities   # {"activities":[...]}
 The port is bound to `127.0.0.1` only — public exposure is the Cloudflare Tunnel's job
 (`cloudflared` on the Pi host maps the tunnel hostname to `http://localhost:8000`).
 
-## Seeding activities
+### Traffic hardening model
 
-The programme JSON is authored on the static site. To load it into the API:
+No reverse-proxy container — the layers are: **Cloudflare** (public TLS, DDoS/bot filtering,
+edge caching incl. `/schedule`), **slowapi** (per-IP POST rate limit, keyed on
+`CF-Connecting-IP`), and an **in-app body cap** (`MAX_BODY_BYTES`, default 64 KB — rejects
+oversized bodies with 413 before they are read or parsed; covers chunked requests too). A front
+proxy (Caddy/nginx) becomes worth adding only when a second service lands on the Pi.
+
+## Updating the programme (single source of truth)
+
+The programme JSON (authored + versioned in the static repo) is deployed to the Pi's bind mount
+and feeds **both** the website (`GET /schedule`) and the API's DB (startup seed) — the view and
+the signups can never disagree:
 
 ```bash
-docker cp presque-programme.json abordajeux_api:/tmp/programme.json
-docker exec abordajeux_api python -m app.seed /tmp/programme.json
+scp presque-programme.json pi@<pi>:~/abordajeux-api/data/programme.json
+docker compose restart          # startup re-seeds (idempotent upsert, never deletes)
 ```
 
-Idempotent: re-running updates titles/times/max without touching signups. Raising
-`max_participants` promotes confirmed waitlisted people on the next purge run. Activities absent
-from the JSON are never deleted (manual DB access on the Pi for removals).
+A missing file is skipped quietly (first boot before any programme exists); a malformed file is
+logged (`docker compose logs`) and `GET /schedule` returns `{"status": "schedule_invalid"}` —
+the app stays up. Raising `max_participants` promotes confirmed waitlisted people on the next
+purge run. Activities absent from the JSON are never deleted (manual DB access on the Pi for
+removals). The seed CLI (`docker exec abordajeux_api python -m app.seed [path]`) remains for
+explicit re-seeds; with no argument it reads `PROGRAMME_PATH`.
 
 ## Cron jobs (host crontab)
 

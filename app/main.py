@@ -7,16 +7,18 @@ from typing import Annotated
 import httpx
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi.util import get_remote_address
 
 from app import db as db_mod
-from app import email
+from app import email, schedule
+from app import seed as seed_mod
 from app.config import Settings, load_settings
 from app.email import MailSender
+from app.middleware import BodySizeLimitMiddleware
 from app.schemas import (
     ActivitySignups,
     CapacityExceeded,
@@ -44,6 +46,9 @@ SIGNUP_OK_MSG = "Un email de confirmation a été envoyé à {email}."
 FORM_OK_MSG = (
     "Votre message a bien été envoyé à l'équipe de À L'Abordajeux. "
     "Nous vous répondrons dès que possible.")
+
+
+SCHEDULE_CACHE_CONTROL = "public, max-age=300"
 
 
 class APIError(Exception):
@@ -86,6 +91,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     conn = db_mod.connect(settings.database_path)
     try:
         db_mod.init_schema(conn)
+        try:
+            seeds = seed_mod.load_programme(settings.programme_path)
+        except FileNotFoundError:
+            print(f"no programme file at {settings.programme_path}; "
+                  "skipping startup seed")
+        except ValueError as exc:
+            print(f"programme file invalid, skipping startup seed: {exc}")
+        else:
+            seed_mod.seed_activities(conn, seeds)
+            print(f"seeded {len(seeds)} activities from "
+                  f"{settings.programme_path}")
     finally:
         conn.close()
     http_client = httpx.Client(timeout=10.0)
@@ -125,6 +141,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                             })
 
     app.add_middleware(
+        BodySizeLimitMiddleware,
+        max_body_bytes=settings.max_body_bytes,
+    )
+    app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
         allow_methods=["GET", "POST", "OPTIONS"],
@@ -135,6 +155,20 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/health")
     def health() -> dict:
         return {"status": "ok"}
+
+    @app.get("/schedule")
+    def get_schedule(
+            settings: Annotated[Settings,
+                                Depends(get_settings)]) -> Response:
+        try:
+            raw = schedule.read_schedule(settings.programme_path)
+        except FileNotFoundError:
+            raise APIError(404, {"status": "schedule_missing"}) from None
+        except ValueError:
+            raise APIError(500, {"status": "schedule_invalid"}) from None
+        return Response(content=raw,
+                        media_type="application/json",
+                        headers={"Cache-Control": SCHEDULE_CACHE_CONTROL})
 
     @app.get("/activities")
     def list_activities(

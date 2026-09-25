@@ -52,12 +52,14 @@ def seed_activities(conn: sqlite3.Connection,
 
 
 def main(argv: list[str]) -> int:
-    if len(argv) != 2:
-        print("usage: python -m app.seed <path-to-programme.json>",
+    if len(argv) > 2:
+        print("usage: python -m app.seed [path-to-programme.json]",
               file=sys.stderr)
         return 2
-    seeds = load_programme(argv[1])
-    conn = db_mod.connect(load_settings().database_path)
+    settings = load_settings()
+    path = argv[1] if len(argv) == 2 else settings.programme_path
+    seeds = load_programme(path)
+    conn = db_mod.connect(settings.database_path)
     try:
         db_mod.init_schema(conn)
         count = seed_activities(conn, seeds)

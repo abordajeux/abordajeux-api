@@ -107,3 +107,22 @@ def test_seed_main_seeds_database(tmp_path, monkeypatch: pytest.MonkeyPatch,
     count = conn.execute("SELECT COUNT(*) FROM activities").fetchone()[0]
     conn.close()
     assert count == 3
+
+
+def test_seed_main_defaults_to_programme_path(
+        tmp_path, monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture) -> None:
+    db_path = tmp_path / "seed.db"
+    programme_path = tmp_path / "programme.json"
+    programme_path.write_text(_FIXTURE.read_text(encoding="utf-8"),
+                              encoding="utf-8")
+    monkeypatch.setenv("DATABASE_PATH", str(db_path))
+    monkeypatch.setenv("PROGRAMME_PATH", str(programme_path))
+
+    assert main(["app.seed"]) == 0
+
+    assert "seeded 3 activities" in capsys.readouterr().out
+    conn = db_mod.connect(db_path)
+    count = conn.execute("SELECT COUNT(*) FROM activities").fetchone()[0]
+    conn.close()
+    assert count == 3

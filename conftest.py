@@ -35,6 +35,7 @@ class _StubSender:
 def api(tmp_path):
     settings = Settings(
         database_path=str(tmp_path / "t.db"),
+        programme_path=str(tmp_path / "programme.json"),
         cors_origins=["https://test.local"],
         mail_api_key="key-123",
         mail_sender="noreply@test.local",
