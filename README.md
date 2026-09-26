@@ -41,7 +41,7 @@ manual `mkdir`.
 | Variable | Purpose |
 |----------|---------|
 | `MAIL_API_KEY` | API key from the Resend account (mail sending is provider-agnostic in code) |
-| `CORS_ORIGINS` | allowed origin, `https://abordajeux.github.io` — no wildcard |
+| `CORS_ORIGINS` | allowed origin, `https://abordajeux.ch` — no wildcard |
 | `DATABASE_PATH` | SQLite file path; keep under `/app/data` (bind-mounted) |
 | `PROGRAMME_PATH` | programme JSON — served by `GET /schedule` and auto-seeded at startup; keep under `/app/data` |
 | `MAIL_SENDER` | sender email for outgoing mail (must be on a Resend-verified domain) |
