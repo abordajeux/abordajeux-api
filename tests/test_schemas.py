@@ -2,6 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.schemas import (
+    BenevoleFormRequest,
     ContactFormRequest,
     FeedbackFormRequest,
     sanitize_line,
@@ -88,3 +89,23 @@ def test_feedback_form_rejects_out_of_range_ratings() -> None:
         FeedbackFormRequest(**{**_FEEDBACK_BODY, "planning_rating": 6})
     with pytest.raises(ValidationError):
         FeedbackFormRequest(**{**_FEEDBACK_BODY, "welcome_rating": -1})
+
+
+def test_benevole_form_accepts_valid_body() -> None:
+    form = BenevoleFormRequest(sender_email="visitor@example.com")
+    assert str(form.sender_email) == "visitor@example.com"
+
+
+def test_benevole_form_strips_surrounding_whitespace() -> None:
+    form = BenevoleFormRequest(sender_email="  visitor@example.com  ")
+    assert str(form.sender_email) == "visitor@example.com"
+
+
+def test_benevole_form_rejects_bad_email() -> None:
+    with pytest.raises(ValidationError):
+        BenevoleFormRequest(sender_email="not-an-email")
+
+
+def test_benevole_form_rejects_missing_email() -> None:
+    with pytest.raises(ValidationError):
+        BenevoleFormRequest()

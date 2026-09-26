@@ -21,6 +21,8 @@ from app.email import MailSender
 from app.middleware import BodySizeLimitMiddleware
 from app.schemas import (
     ActivitySignups,
+    BenevoleFormRequest,
+    BenevoleOk,
     CapacityExceeded,
     ContactFormRequest,
     FeedbackFormRequest,
@@ -43,10 +45,11 @@ WAITLISTED_MSG = (
     "Cette activité est complète : vous avez été ajouté·e à la liste d'attente. "
     "Un email de confirmation vous a été envoyé à {email}.")
 SIGNUP_OK_MSG = "Un email de confirmation a été envoyé à {email}."
-FORM_OK_MSG = (
-    "Votre message a bien été envoyé à l'équipe de À L'Abordajeux. "
-    "Nous vous répondrons dès que possible.")
-
+FORM_OK_MSG = ("Votre message a bien été envoyé à l'équipe de À L'Abordajeux. "
+               "Nous vous répondrons dès que possible.")
+BENEVOLE_OK_MSG = (
+    "Merci pour votre intérêt ! Un email vient de vous être envoyé à {email} "
+    "avec la marche à suivre pour rejoindre l'équipe de bénévoles.")
 
 SCHEDULE_CACHE_CONTROL = "public, max-age=300"
 
@@ -158,8 +161,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/schedule")
     def get_schedule(
-            settings: Annotated[Settings,
-                                Depends(get_settings)]) -> Response:
+            settings: Annotated[Settings, Depends(get_settings)]) -> Response:
         try:
             raw = schedule.read_schedule(settings.programme_path)
         except FileNotFoundError:
@@ -291,6 +293,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             sender_email=str(body.sender_email),
             message=body.message,
         )
+        print("HELLO WORLD")
+        print(settings.mail_contact_email)
+
         sender.send(
             to_email=settings.mail_contact_email,
             content=content,
@@ -319,6 +324,44 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             reply_to=str(body.sender_email),
         )
         return FormOk(message=FORM_OK_MSG)
+
+    @app.post("/forms/benevole", response_model=BenevoleOk)
+    @limiter.limit(post_rate)
+    def submit_benevole_form(
+        request: Request,
+        body: BenevoleFormRequest,
+        sender: Annotated[MailSender, Depends(get_mail_sender)],
+        settings: Annotated[Settings, Depends(get_settings)],
+    ) -> BenevoleOk:
+        print("HELLO")
+        applicant_email = str(body.sender_email)
+        if not email.has_valid_mx(applicant_email):
+            raise APIError(422, {
+                "status": "invalid_email",
+                "message": INVALID_EMAIL_MSG
+            })
+
+        coordinator_email = (settings.mail_benevole_email
+                             or settings.mail_contact_email)
+        welcome = email.build_benevole_welcome_email(
+            coordinator_email=coordinator_email,
+            benevolus_org_link=settings.benevolus_org_link,
+            benevolus_token=settings.benevolus_token,
+        )
+        sender.send(
+            to_email=applicant_email,
+            content=welcome,
+            reply_to=coordinator_email,
+        )
+        notification = email.build_benevole_notification_email(
+            sender_email=applicant_email)
+        sender.send(
+            to_email=coordinator_email,
+            content=notification,
+            reply_to=applicant_email,
+        )
+        return BenevoleOk(message=BENEVOLE_OK_MSG.format(
+            email=applicant_email))
 
     return app
 

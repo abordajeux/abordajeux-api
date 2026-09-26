@@ -110,7 +110,18 @@ class FeedbackFormRequest(BaseModel):
         return sanitize_message(value)
 
 
+class BenevoleFormRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    sender_email: EmailStr
+
+
 class FormOk(BaseModel):
+    status: str = "ok"
+    message: str
+
+
+class BenevoleOk(BaseModel):
     status: str = "ok"
     message: str
 

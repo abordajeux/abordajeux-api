@@ -17,6 +17,7 @@ CORS-restricted JSON endpoints.
 | POST | `/verify` | none | double opt-in confirmation — token in the JSON body so it stays out of URL logs; POST-only so email link scanners can't auto-confirm (the static verify page issues the call) |
 | POST | `/forms/contact` | rate-limited (same knob as signup) | contact-form intake — sanitized, emailed to `MAIL_CONTACT_EMAIL` with the submitter as `reply_to`; no DB |
 | POST | `/forms/feedback` | rate-limited (same knob as signup) | event-feedback intake (event + message + two 0–5 ratings) — same sanitize-and-email flow |
+| POST | `/forms/benevole` | rate-limited (same knob as signup) + MX check on the address | volunteer-application intake (email only) — sends joining instructions to the applicant and a notification to `MAIL_BENEVOLE_EMAIL` (falls back to `MAIL_CONTACT_EMAIL`); no DB |
 
 ## Deploy (Docker on the Pi)
 
@@ -45,6 +46,9 @@ manual `mkdir`.
 | `PROGRAMME_PATH` | programme JSON — served by `GET /schedule` and auto-seeded at startup; keep under `/app/data` |
 | `MAIL_SENDER` | sender email for outgoing mail (must be on a Resend-verified domain) |
 | `MAIL_CONTACT_EMAIL` | association inbox — quoted in signup emails and the recipient of form submissions |
+| `MAIL_BENEVOLE_EMAIL` | volunteer-coordinator inbox — receives volunteer-application notifications (and is the `reply_to` on the applicant's instructions email); falls back to `MAIL_CONTACT_EMAIL` when empty |
+| `BENEVOLUS_ORG_LINK` | link to the org's join page on benevolus.ch — quoted in the volunteer welcome email |
+| `BENEVOLUS_TOKEN` | invitation token shown alongside the link in the welcome email |
 | `RATE_LIMIT_SECONDS` | minimum seconds between POSTs (signup + form endpoints) per IP |
 | `MAX_BODY_BYTES` | request-body cap (413 before parsing); 64 KB ≈ 10× the largest legit payload |
 | `VERIFY_BASE_URL` | static site's verify page; the API appends `?token=…` |
@@ -106,6 +110,13 @@ association inbox (`MAIL_CONTACT_EMAIL`) with the submitter's address as `reply_
 stored: validation (Pydantic bounds, `EmailStr`), control-character stripping (single-line fields
 lose all C0/C1 chars — no email-header injection; messages keep newlines), then an HTML-escaped
 fr-FR email body. The same `RATE_LIMIT_SECONDS` window applies per form endpoint and per IP.
+
+`POST /forms/benevole` (`{sender_email}` only — minimal-info principle) sends **two** emails:
+joining instructions to the applicant (`reply_to` = the coordinator, so replies reach a human)
+and a notification to `MAIL_BENEVOLE_EMAIL` (`reply_to` = the applicant). The address gets the
+same DNS MX check as signups because the API sends mail *to* it — a dead domain would otherwise
+silently swallow the application. The joining-instructions body is a visible `TODO` placeholder
+pending the operator's final copy.
 
 ## Operations
 

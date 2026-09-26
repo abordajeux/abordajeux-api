@@ -11,6 +11,7 @@ MAIL_URL = "https://api.resend.com/emails"
 SENDER_NAME = "À L'Abordajeux"
 SUBJECT = "Confirmez votre inscription — Presques 24h du Jeu"
 WAITLIST_SUBJECT = "Vous êtes sur la liste d'attente — Presques 24h du Jeu"
+BENEVOLE_WELCOME_SUBJECT = "Devenir bénévole — À L'Abordajeux"
 
 _FR_MONTHS = (
     "janvier",
@@ -228,6 +229,100 @@ Message :
 <p><strong>Organisation :</strong> {planning_rating}/5</p>
 <p><strong>Message :</strong></p>
 <p>{safe_message}</p>
+    """
+
+    return EmailContent(subject=subject, html=body, text=text)
+
+
+def build_benevole_welcome_email(
+    *,
+    coordinator_email: str,
+    benevolus_org_link: str,
+    benevolus_token: str,
+) -> EmailContent:
+    safe_coordinator = html.escape(coordinator_email)
+    safe_link = html.escape(benevolus_org_link)
+    safe_token = html.escape(benevolus_token)
+
+    text = f"""
+Chère personne, bonjour,
+Tout d'abord, merci de l'intérêt que vous portez aux presque 24h du jeu, et nous nous réjouissons de vous intégrer à l'équipage !
+
+La gestion des bénévoles et des shifts se fera par l'application benevolus. Si, comme la personne qui écrit ce mail, vous faites
+partie des gens qui refusent de créer des comptes, il vous faudra contacter notre recruteur de bénévoles afin d'obtenir une exemption
+(je vous rassure, c'est plus une formalité, mais plus de personnes utilisent l'application, plus c'est facile pour notre responsable).
+
+Dans le cas contraire, en suivant le lien ci dessous, vous arriverez sur l'application benevolus, et en créant un compte, vous rejoindrez
+l'organisation générale. Vous pourrez alors trouver les presques 24h du jeu sous l'onglet "événement".
+Une fois sur l'événement, vous pourrez alors choisir vos shifts comme bon vous semble.
+
+Lien : {benevolus_org_link}?token={benevolus_token}
+
+Rejoindre les bénévoles vous donne les avantages suivants:
+
+ - L'entrée est gratuite
+ - Chaque shift de 2h s'accompagne de softs à volonté (pour la consommation personelle) pendant la durée de la shift.
+ - chaque shift de 4h (ou deux shifts de 2h) donne droit à un repas.
+
+Si vous avez la moindre question, vous pouvez contacter notre recruteur à {coordinator_email}
+
+L'équipage de À L'Abordajeux
+"""
+
+    body = f"""
+<p>Chère personne, bonjour,</p>
+<p>Tout d'abord, merci de l'intérêt que vous portez aux presque 24h du jeu, et nous nous réjouissons de vous intégrer à l'équipage. !</p>
+
+<p>La gestion des bénévoles et des shifts se fera par l'application <strong>benevolus</strong>.
+   Si, comme la personne qui écrit ce mail, vous faites partie des gens qui refusent de créer des comptes,
+   il vous faudra contacter notre recruteur de bénévoles afin d'obtenir une exemption
+   (je vous rassure, c'est plus une formalité, mais plus de personnes utilisent l'application, plus c'est facile pour notre responsable).</p>
+
+
+<p>Dans le cas contraire, en suivant le lien ci dessous, vous arriverez sur l'application benevolus, et en créant un compte, vous rejoindrez
+l'organisation générale. Vous pourrez alors trouver les presques 24h du jeu sous l'onglet "événement".
+Une fois sur l'événement, vous pourrez alors choisir vos shifts comme bon vous semble.</p>
+
+<p>Rejoindre les bénévoles vous donne les avantages suivants:</p>
+
+<ul>
+<li>L'entrée est gratuite</li>
+<li>Chaque shift de 2h s'accompagne de softs à volonté (pour la consommation personelle) pendant la durée de la shift.</li>
+<li>chaque shift de 4h (ou deux shifts de 2h) donne droit à un repas.</li>
+</ul>
+
+<p><strong>Lien :</strong> <a href="{safe_link}?token={safe_token}">Rejoindre les bénévoles</a></p>
+
+<p>Si vous avez la moindre question, vous pouvez contacter notre recruteur à <a href="mailto:{safe_coordinator}">{safe_coordinator}</a></p>
+
+<p>L'équipage de À L'Abordajeux</p>
+    """
+
+    return EmailContent(subject=BENEVOLE_WELCOME_SUBJECT, html=body, text=text)
+
+
+def build_benevole_notification_email(
+    *,
+    sender_email: str,
+) -> EmailContent:
+    safe_sender = html.escape(sender_email)
+    subject = f"Nouvelle proposition de bénévolat — {sender_email}"
+
+    text = f"""
+Bonjour à toi, recruteur de nos fiers bénévoles.
+
+Une personne souhaite rejoindre l'équipe de bénévoles, et a reçu des instructions pour rejoindre l'équipage.
+
+Email : {sender_email}
+
+Réponds directement à cet email pour prendre contact.
+"""
+
+    body = f"""
+<p>Bonjour à toi, recruteur de nos fiers bénévoles.</p>
+<p>Une personne souhaite rejoindre l'équipe de bénévoles, et a reçu des instructions pour rejoindre l'équipage.</p>
+<p><strong>Email :</strong> <a href="mailto:{safe_sender}">{safe_sender}</a></p>
+<p>Réponds directement à cet email pour prendre contact.</p>
     """
 
     return EmailContent(subject=subject, html=body, text=text)

@@ -40,6 +40,9 @@ def api(tmp_path):
         mail_api_key="key-123",
         mail_sender="noreply@test.local",
         mail_contact_email="contact@test.local",
+        mail_benevole_email="benevoles@test.local",
+        benevolus_org_link="https://app.benevolus.ch/rejoindre/test-org",
+        benevolus_token="tok-123",
         rate_limit_seconds=30,
         verify_base_url="https://test.local/verify",
     )
