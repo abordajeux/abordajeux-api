@@ -6,5 +6,6 @@ data/
 .ruff_cache/
 .mypy_cache/
 .pytest_cache/
-
+*.db
+*.db*
 AGENTS.md

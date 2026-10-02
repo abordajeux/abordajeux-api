@@ -9,3 +9,5 @@ fixtures/
 .ruff_cache/
 .mypy_cache/
 .pytest_cache/
+*.db
+*.db*
