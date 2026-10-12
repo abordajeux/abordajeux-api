@@ -1,452 +1,704 @@
 {
   "activities": [
     {
-      "id": "presque-loup-garou-special-25-ans",
-      "title": "Loup garou spécial 25 ans",
-      "category": "jds",
-      "color": "--presque-activites-association",
-      "start": "2026-11-14T10:30:00+01:00",
-      "end": "2026-11-14T12:00:00+01:00",
-      "max_participants": 18,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-tournoi-uno",
-      "title": "Tournoi de UNO",
-      "category": "jds",
-      "color": "--presque-tournois",
-      "start": "2026-11-14T14:00:00+01:00",
-      "end": "2026-11-14T17:00:00+01:00",
-      "max_participants": 16,
-      "pre_img_description": ["Pour les petits moussaillons."],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-tournoi-chibre",
-      "title": "Tournoi de Chibre",
-      "category": "jds",
-      "color": "--presque-tournois",
-      "start": "2026-11-14T18:00:00+01:00",
-      "end": "2026-11-14T22:00:00+01:00",
-      "max_participants": 12,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-loup-garoot",
-      "title": "Loup Garoot",
-      "category": "jds",
-      "color": "--presque-activites-association",
-      "start": "2026-11-14T23:00:00+01:00",
-      "end": "2026-11-15T00:30:00+01:00",
-      "max_participants": 18,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-tournoi-mtg-pauper",
+      "id": "presque-2026-mtg-tournoi-pauper",
       "title": "Tournoi Magic: The Gathering — Pauper",
       "category": "jds",
       "color": "--presque-partenaires",
       "start": "2026-11-14T10:30:00+01:00",
       "end": "2026-11-14T20:00:00+01:00",
       "max_participants": 32,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "pre_img_description": [
+        "MTG' Neuch vous convie à son tournoi de Pauper dans le cadre des presque 24h du jeu, où 32 personnes pourront s'affronter, idéalement dans la convivialité.",
+        "Au cours de la journée, si certains participant.es le souhaitent, des sides events vous seront proposés."
+      ],
+      "post_img_description": [
+        "Vous aimeriez certainements quelques informations pratiques.",
+        "",
+        "Le tournoi est un tournoi de Pauper SUL district à 32 places, en REL compétitif.",
+        "Le prix d'inscription est de 20 CHF, qui comprend l'entrée aux presque 24h du jeu, à payer sur place.",
+        "Il y aura de 4 - 6 rondes Suisses (selon le nombre de participants), suivies d'un top 8." ,
+        "Les portes ouvrent à 10h, et le tournoi commence à 10h30.",
+        "Une pause repas de 30 minutes aura lieu après la deuxième ronde."
+      ],
+      "organizer": ["MTG Neuch'", ""],
+      "image_path": "presque/mtgneuch_pauper.jpg",
+      "prizes": {
+        "Exemple de répartition à 32 joueur.euses": "",
+        "1er": "environ 25% du prize pool",
+        "2ème": "environ 20% du prize pool",
+        "3-4": "environ 10% du prize pool chacun.e",
+        "5-8": "environ 7% du prize pool chacun.e",
+        "9-12": "le reste"
+      }
     },
     {
-      "id": "presque-draft-funky-mtg",
+      "id": "presque-2026-mtg-draft-funky",
       "title": "Draft Funky Magic: The Gathering",
+      "short_description": "Un draft de Magic: The Gathering aux règles modifiées pour une ambiance plus détendue.",
       "category": "jds",
       "color": "--presque-partenaires",
       "start": "2026-11-14T21:00:00+01:00",
       "end": "2026-11-15T00:00:00+01:00",
       "max_participants": 8,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "pre_img_description": ["L'une des grande marque de fabrique de MtG Neuch' est l'organisation régulière de drafts aux règles altérées, pour des parties mon conventionelles, mais plus mémorables."],
+      "post_img_description": [
+        "Les joueur.euses seront réparties en pods de 6-10, en fonction du nombre d'inscrits, avec une préférence pour des pods de 8.",
+        "Il s'agit d'un draft \"classique\", mais certaines règles du jeu seront altérées pendant les parties. La variation exacte n'est pas encore connue, mais elle vous sera bientôt communiquée.",
+        "Dans tous les cas, vous saurez avant de drafter, quelles règles ont changé par rapport aux règles de base.",
+        "Une finance d'inscription de 20.- pour le draft est demandée, à payer sur place."
+      ],
+      "organizer": ["MTG Neuch'", ""],
+      "image_path": "presque/mtgneuch_draft_funky.jpg",
+      "prizes": "Chaque personne repart avec ses cartes draftées et un booster en cadeau"
     },
     {
-      "id": "presque-wargames-sam-1330-t1",
-      "title": "Initiation aux wargames — table 1",
+      "id": "presque-2026-mtg-judge-tower",
+      "title": "Magic: The Gathering: Judge Tower",
       "category": "jds",
       "color": "--presque-partenaires",
-      "start": "2026-11-14T13:30:00+01:00",
-      "end": "2026-11-14T15:00:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "start": "2026-11-15T13:00:00+01:00",
+      "end": "2026-11-15T17:00:00+01:00",
+      "max_participants": 0,
+      "pre_img_description": [
+        "La Judge Tower est un format de jeu volontairement complexe, où 4 joueurs s'affrontent avec un deck commun comportant des cartes destinées à faire faire des erreurs aux joueurs",
+        "La spécificité de la Judge Tower, c'est que vous êtes obligés de jouer vos cartes, et que commettre une erreur que vos adversaires repèrent vous fait immédiatement perdre la partie"
+      ],
+      "post_img_description": [
+        "Une Judge Tower sera disponible pendant toute l'après-midi"
+      ],
+      "organizer": ["MTG Neuch'", ""],
+      "image_path": "presque/judge_tower.png"
     },
     {
-      "id": "presque-wargames-sam-1330-t2",
-      "title": "Initiation aux wargames — table 2",
+      "id": "presque-2026-initiation-tcg-mtg",
+      "title": "Initiation TCG Magic: The Gathering",
       "category": "jds",
       "color": "--presque-partenaires",
-      "start": "2026-11-14T13:30:00+01:00",
-      "end": "2026-11-14T15:00:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "start": "2026-11-15T13:00:00+01:00",
+      "end": "2026-11-15T17:00:00+01:00",
+      "max_participants": 0,
+      "pre_img_description": [
+        "Il est parfois intimidant de se lancer dans un jeu de cartes à collectionner. Entre les règles complexes, la présence ou non d'autres joueurs, ou tout simplement l'inquiétude que le jeu puisse ne pas nous plaire.",
+        "MTG Neuch' vous propose de répondre à toutes ces inquiétudes, en vous initiant au jeu. Vous pourrez apprendre les règles de base, faire votre ou vos premières parties et, si le jeu vous plaît, immédiatement entrer en contact avec la communauté locale."
+      ],
+      "post_img_description": [
+        "De façon très étrange, il n'y a pas besoin de connaîtres les règles pour apprendre à jouer.",
+        "Une partie de Magic ne dure, bien évidemment, pas 4h. Ensuite, si vous souhaitez faire plusieurs parties, nous n'allons pas vous mettre à la porte."
+    ],
+      "organizer": ["MTG Neuch'", ""],
+      "image_path": "presque/mtgneuch_initiation.jpg"
     },
     {
-      "id": "presque-wargames-sam-1500-t1",
-      "title": "Initiation aux wargames — table 1",
+      "id": "presque-2026-tcg-mtg-dandan",
+      "title": "Magic: The Gathering - Dandan",
       "category": "jds",
       "color": "--presque-partenaires",
-      "start": "2026-11-14T15:00:00+01:00",
-      "end": "2026-11-14T16:30:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "start": "2026-11-15T13:00:00+01:00",
+      "end": "2026-11-15T17:00:00+01:00",
+      "max_participants": 0,
+      "pre_img_description": [
+        "Le Dandan est l'un des formats les plus étranges de Magic: The Gathering.",
+        "Deux joueurs partagent un deck, avec pour objectif de s'attaquer avec l'une des pires créatures du jeu, le Dandan.",
+        "Le deck est conçu pour permettre de manipuler facilement le dessus de la bibliothèque et la capacité du Dandan à attaquer"
+      ],
+      "post_img_description": [
+         "Deux decks de Dandan seront disponibles pendant toute l'après-midi."
+    ],
+      "organizer": ["MTG Neuch'", ""],
+      "image_path": "presque/"
+    },
+
+    {
+      "id": "presque-2026-tournoi-uno",
+      "title": "Tournoi de UNO",
+      "category": "jds",
+      "color": "--presque-tournois",
+      "start": "2026-11-14T14:00:00+01:00",
+      "end": "2026-11-14T17:00:00+01:00",
+      "max_participants": 16,
+      "short_description": "Tout le monde sait jouer au Uno, mais personne n'en connaît les 'vraies' règles. Ce tournoi, destiné aux plus jeunes moussaillons, est l'occasion de les apprendre.",
+      "pre_img_description": [
+        "Le Uno est l'un des jeux les plus joués et les plus connus au monde. Il allie beaucoup de chance, un peu de bluff, un très très très léger soupçon de tactique et une connaissance approximative des règles.",
+        "Nos moussaillons de 6 à 12 ans sont donc invités à participer à un tournoi durant lequel, (mal)heureusement les règles maisons n'existeront pas."
+      ],
+      "post_img_description": [
+        "Connaître les règles exactes n'est pas obligatoire pour participer, mais connaître le principe du jeu est conseillé.",
+        "Le tournoi se déroulera en trois rondes, avec des tables de 4 joueurs. Si vous avez des questions sur le déroulement exact, n'hésitez pas à nous contacter."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/tournoi_uno.jpg",
+      "image_copyright": ["", ""],
+      "prizes": "Les lots exacts n'ont pas encore été déterminés, mais les trois premiers repartiront avec quelque chose"
     },
     {
-      "id": "presque-wargames-sam-1500-t2",
-      "title": "Initiation aux wargames — table 2",
+      "id": "presque-2026-tournoi-chibre",
+      "title": "Tournoi de Chibre",
       "category": "jds",
-      "color": "--presque-partenaires",
-      "start": "2026-11-14T15:00:00+01:00",
-      "end": "2026-11-14T16:30:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-wargames-sam-1630-t1",
-      "title": "Initiation aux wargames — table 1",
-      "category": "jds",
-      "color": "--presque-partenaires",
-      "start": "2026-11-14T16:30:00+01:00",
-      "end": "2026-11-14T18:00:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-wargames-sam-1630-t2",
-      "title": "Initiation aux wargames — table 2",
-      "category": "jds",
-      "color": "--presque-partenaires",
-      "start": "2026-11-14T16:30:00+01:00",
-      "end": "2026-11-14T18:00:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-wargames-sam-1800-t1",
-      "title": "Initiation aux wargames — table 1",
-      "category": "jds",
-      "color": "--presque-partenaires",
+      "color": "--presque-tournois",
       "start": "2026-11-14T18:00:00+01:00",
-      "end": "2026-11-14T19:30:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "end": "2026-11-14T22:00:00+01:00",
+      "max_participants": 12,
+      "pre_img_description": [
+        "Le Chibre (ou Jass, pour les quelques personnes qui ne connaissent que ce nom là), est le jeu de carte traditionnel Suisse par excellence.",
+        "Se jouant en équipe de 2, le tournoi se joue selon les règles les plus simples en se passant des annonces, et en évitant les atouts qui augmentent les points (pas de pique double ici)."
+    ],
+      "post_img_description": [
+        "Si vous vous inscrivez à deux, nous partirons du principe que vous souhaitez faire équipe.",
+        "Comme pour tout tournoi, connaître les règles et savoir jouer vous donnera un avantage certain, mais si vous souhaitez découvrir le jeu ainsi, faites vous plaisir."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/tournoi_chibre.jpg",
+      "prizes": "Les lots exacts n'ont pas encore été déterminés, mais les trois premières équipes repartiront avec quelque chose"
     },
     {
-      "id": "presque-wargames-sam-1800-t2",
-      "title": "Initiation aux wargames — table 2",
-      "category": "jds",
-      "color": "--presque-partenaires",
-      "start": "2026-11-14T18:00:00+01:00",
-      "end": "2026-11-14T19:30:00+01:00",
-      "max_participants": 2,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-tournoi-flip-7",
+      "id": "presque-2026-tournoi-flip-7",
       "title": "Tournoi de Flip 7",
       "category": "jds",
       "color": "--presque-activites-association",
       "start": "2026-11-15T10:00:00+01:00",
       "end": "2026-11-15T12:00:00+01:00",
       "max_participants": 15,
-      "pre_img_description": ["Pour les petits moussaillons."],
-      "post_img_description": [],
+      "short_description": "Le dimanche aussi, nous proposons un tournoi à nos jeunes moussaillons.",
+      "pre_img_description": [
+        "Le Flip 7 est un jeu où il faut savoir s'arrêter au bon moment pour gagner. À votre tour, vous pouvez soit vous arrêter, soit prendre une carte. Plus vous avez de cartes, plus vous faites de point, mais si vous récupérez un double, vous perdez tous vos points.",
+        "Nos moussaillons de 6 à 12 ans sont invités à se mesurer les uns aux autres, dans une épreuve d'audace avec un soupçon de stratégie."
+      ],
+      "post_img_description": [
+        "Connaître les règles n'est pas obligatoire pour participer",
+        "Le tournoi se déroulera en deux rondes, avec des tables de 5 joueurs, et une table finale de 6 joueurs. Si vous avez des questions sur le fonctionnement du tournoi, n'hésitez pas à nous contacter."
+      ],
       "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/tournoi_flip_7.jpg",
+      "prizes": "Les lots exacts n'ont pas encore été déterminés, mais les trois premiers repartiront avec quelque chose"
     },
     {
-      "id": "presque-initiation-tcg-star-wars-unlimited",
+      "id": "presque-2026-tournoi-pfc",
+      "title": "Tournoi de Pierre-Feuille-Ciseau",
+      "category": "jds",
+      "color": "--presque-activites-association",
+      "start": "2026-11-15T01:30:00+01:00",
+      "end": "2026-11-15T02:12:00+01:00",
+      "max_participants": 0,
+      "short_description": "Un tournoi bon enfant à presque deux heures du matin.",
+      "pre_img_description": [
+        "Normalement, on ne joue à Pierre Feuille Ciseau que pour départager qui aura le dernier morceau de fromage. Nous n'aurons pas de morceau de fromage pour l'occasion, mais nous vous proposons quand même de jouer.",
+        "Des manches rapides, en Bo3, à élimination directe. Une structure sérieuse et compétitive. Si vous vous débrouillez bien, c'est une potentielle carrière professionelle qui s'ouvre à vous. On a aucun sponsor officiel sur place, mais peut être que l'un d'entre se sera perdu à 1h30 du matin à Neuchâtel.",
+        "Plus sérieusement, si vous êtes dans la salle à 1h30 du matin, venez vous videz l'esprit avec un petit jeu qui ne demande aucune réflexion."
+      ],
+      "post_img_description": [
+        "Connaître les règles n'est pas obligatoire pour participer",
+        "Pour ceux qui connaissent les variantes, les règles de Suisse Orientale Sudalpine seront utilisées.",
+        "Pour ceux qui voulaient voir quelles étaient les règles de Suisse Orientale Sudalpine histoire d'avoir un avantage, il vous reste un peu plus d'un mois pour les créer et les faire homologuer. Bonne chance."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/tournoi_pfc.jpg",
+      "prizes": "Un bon de 100.- à la coop pour le vainqueur. De quoi s'acheter quelques morceaux de fromages."
+    },
+
+    {
+      "id": "presque-2026-loup-garou-special-25-ans",
+      "title": "Loup garou spécial 25 ans",
+      "category": "jds",
+      "color": "--presque-activites-association",
+      "start": "2026-11-14T10:30:00+01:00",
+      "end": "2026-11-14T12:00:00+01:00",
+      "max_participants": 18,
+      "short_description":"À l'occasion des 25 ans du loup garou, une édition spéciale a été conçue. Nous vous proposons d'entamer le festival avec une partie de cette dernière.",
+      "pre_img_description": [
+        "Le loup garou a eu 25 ans cette année, et une édition spéciale à été sortie pour son anniversaire.",
+        "L'Abordajeux vous propose de commencer le festival avec une petite partie de ce jeux qui a démocratisé les rôles cachés et les accusations plus ou moins fondées."
+      ],
+      "post_img_description": [
+        "Aucune connaissance des règles n'est nécessaire pour participer, elles vous seront expliquées en début de partie."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/loup_garou_25.jpg"
+    },
+    {
+      "id": "presque-2026-loup-garoot",
+      "title": "Loup Garoot",
+      "category": "jds",
+      "color": "--presque-activites-association",
+      "start": "2026-11-14T23:00:00+01:00",
+      "end": "2026-11-15T00:30:00+01:00",
+      "max_participants": 18,
+      "short_description":"",
+      "pre_img_description": [
+        "Le Loup Garou est connu, mais il a malheureusement un peu vieilli. Il a démocratisé le jeu à rôle caché mais, en tant que premier sur le marché, il a parfois un peu vieilli.",
+        "Il reste cependant le plus connu, et le plus facile à expliquer, et il est donc courant que les gens créent une variante reprenant les principes de base, mais en y ajoutant quelques éléments.",
+        "Le Loup Garoot est une tentative d'intégrer l'univers de Root au Loup Garou, avec des personnages spéciaux, des petites règles supplémentaires, et des factions en conflit qui ne devront pas s'occuper que des loups."
+      ],
+      "post_img_description": [
+        "Aucune connaissance des règles n'est nécessaire pour participer, elles vous seront expliquées en début de partie."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/loup_garoot.jpg"
+    },
+
+    {
+      "id": "presque-2026-wargames-sam-1330",
+      "title": "Initiation à Warhammer 40'000",
+      "category": "jds",
+      "color": "--presque-partenaires",
+      "start": "2026-11-14T13:30:00+01:00",
+      "end": "2026-11-14T15:00:00+01:00",
+      "max_participants": 4,
+      "short_description": "Le Garage vous invite à découvrir un lointain futur dans lequel il n'y a que la guerre.",
+      "pre_img_description": [
+        "Deux tables de jeu de Warhammer 40'000 seront présentes durant l'événement, et nos compagnons du Garage se sont proposés afin de faire découvrir le jeu à tous.tes.",
+        "Les jeux de figurines (et les wargames en général) sont souvent des jeux complexes qu'on appréhende de découvrir seuls, et il vous est ici proposé une première découverte avec des guides expérimentés."
+      ],
+      "post_img_description": [
+        "Chaque table peut accueillir deux joueurs. Si vous vous inscrivez par paire, nous ferons en sorte que vous jouiez à la même table, évidemment."
+      ],
+      "organizer": ["Le Garage", ""],
+      "image_path": "presque/garage.jpg"
+    },
+    {
+      "id": "presque-2026-wargames-sam-1500",
+      "title": "Initiation à Warhammer 40'000",
+      "category": "jds",
+      "color": "--presque-partenaires",
+      "start": "2026-11-14T15:00:00+01:00",
+      "end": "2026-11-14T16:30:00+01:00",
+      "max_participants": 4,
+      "short_description": "Le Garage vous invite à découvrir un lointain futur dans lequel il n'y a que la guerre.",
+      "pre_img_description": [
+        "Deux tables de jeu de Warhammer 40'000 seront présentes durant l'événement, et nos compagnons du Garage se sont proposés afin de faire découvrir le jeu à tous.tes.",
+        "Les jeux de figurines (et les wargames en général) sont souvent des jeux complexes qu'on appréhende de découvrir seuls, et il vous est ici proposé une première découverte avec des guides expérimentés."
+      ],
+      "post_img_description": [
+        "Chaque table peut accueillir deux joueurs. Si vous vous inscrivez par paire, nous ferons en sorte que vous jouiez à la même table, évidemment."
+      ],
+      "organizer": ["Le Garage", ""],
+      "image_path": "presque/garage.jpg"
+    },
+    {
+      "id": "presque-2026-wargames-sam-1630",
+      "title": "Initiation à Warhammer 40'000",
+      "category": "jds",
+      "color": "--presque-partenaires",
+      "start": "2026-11-14T16:30:00+01:00",
+      "end": "2026-11-14T18:00:00+01:00",
+      "max_participants": 4,
+      "short_description": "Le Garage vous invite à découvrir un lointain futur dans lequel il n'y a que la guerre.",
+      "pre_img_description": [
+        "Deux tables de jeu de Warhammer 40'000 seront présentes durant l'événement, et nos compagnons du Garage se sont proposés afin de faire découvrir le jeu à tous.tes.",
+        "Les jeux de figurines (et les wargames en général) sont souvent des jeux complexes qu'on appréhende de découvrir seuls, et il vous est ici proposé une première découverte avec des guides expérimentés."
+      ],
+      "post_img_description": [
+        "Chaque table peut accueillir deux joueurs. Si vous vous inscrivez par paire, nous ferons en sorte que vous jouiez à la même table, évidemment."
+      ],
+      "organizer": ["Le Garage", ""],
+      "image_path": "presque/garage.jpg"
+    },
+    {
+      "id": "presque-2026-wargames-sam-1800",
+      "title": "Initiation à Warhammer 40'000",
+      "category": "jds",
+      "color": "--presque-partenaires",
+      "start": "2026-11-14T18:00:00+01:00",
+      "end": "2026-11-14T19:30:00+01:00",
+      "max_participants": 4,
+      "short_description": "Le Garage vous invite à découvrir un lointain futur dans lequel il n'y a que la guerre.",
+      "pre_img_description": [
+        "Deux tables de jeu de Warhammer 40'000 seront présentes durant l'événement, et nos compagnons du Garage se sont proposés afin de faire découvrir le jeu à tous.tes.",
+        "Les jeux de figurines (et les wargames en général) sont souvent des jeux complexes qu'on appréhende de découvrir seuls, et il vous est ici proposé une première découverte avec des guides expérimentés."
+      ],
+      "post_img_description": [
+        "Chaque table peut accueillir deux joueurs. Si vous vous inscrivez par paire, nous ferons en sorte que vous jouiez à la même table, évidemment."
+      ],
+      "organizer": ["Le Garage", ""],
+      "image_path": "presque/garage.jpg"
+    },
+
+    {
+      "id": "presque-2026-initiation-tcg-star-wars-unlimited",
       "title": "Initiation TCG Star Wars Unlimited",
       "category": "jds",
       "color": "--presque-activites-association",
       "start": "2026-11-15T10:00:00+01:00",
       "end": "2026-11-15T11:00:00+01:00",
-      "max_participants": 8,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 0,
+      "short_description": "Il existe un jeu de carte à collectionner Star Wars, et certain.es joueur.euses ont très envie de vous le faire découvrir.",
+      "pre_img_description": [
+        "La petite communauté locale de Star Wars Unlimited souhaite trouver des nouveaux joueurs, et ils se proposent donc de vous faire découvrir leur jeu du coeur.",
+        "Le jeu se déroule en tours successifs, durant lesquels chaque joueur joue une action, jusqu'à ce que les deux joueurs passent. Une nouvelle manche commence alors, et les joueurs récupèrent de nouveau leurs ressources.",
+        "Ne me demandez pas comment la partie s'arrête, je ne suis là que pour écrire des descriptions, mais je suis certain que vous l'apprendrez lors de cette initiation."
+      ],
+      "post_img_description": ["De façon très étrange, il n'y a pas besoin de connaîtres les règles pour apprendre à jouer."],
       "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
+      "image_path": "presque/swu.jpg"
+    },
+    {
+      "id": "presque-2026-tombola",
+      "title": "Tirage au sort de la tombola",
+      "category": "jds",
+      "color": "--presque-activites-association",
+      "start": "2026-11-15T17:00:00+01:00",
+      "end": "2026-11-15T18:00:00+01:00",
+      "max_participants": 0,
+      "short_description": "",
+      "pre_img_description": ["Parfois, on a juste envie de gagner un truc, et pour cette raison, l'Abordajeux vous propose une petite tombola.",
+    "Pour participer, c'est très simple et ça se fait en trois étape."],
+      "post_img_description": ["1. Venir aux presque 24 heures.", "2. Remplir le petit questionnaire qui vous demande votre avis sur l'événement.", "3. L'introduire dans l'urne présente sur place.","Si vous n'êtes pas présent.e sur place, nous vous contacterons pour vous donner votre prix."],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/tombola.jpg",
       "image_copyright": ["", ""]
     },
     {
-      "id": "presque-initiation-tcg-altered",
+      "id": "presque-2026-initiation-tcg-altered",
       "title": "Initiation TCG Altered",
       "category": "jds",
       "color": "--presque-activites-association",
       "start": "2026-11-15T10:00:00+01:00",
       "end": "2026-11-15T11:00:00+01:00",
-      "max_participants": 8,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 0,
+      "short_description": "Altered est un jeu de carte à collectionner qui n'est plus édité. Celà n'empêche pas sa communauté de toujours l'apprécier et d'avoir envie de vous le présenter.",
+      "pre_img_description": [
+        "Altered est un jeu de cartes à collectionner qui propose de sortir du carcan classique de l'affrontement afin de proposer une narration sur l'exploration.",
+        "Au cours de la partie, vous aurez deux expéditions à gérer, et votre but sera qu'elles se rejoignent dans la même région. Peut importe laquelle avance le plus, du moment qu'elles se rejoignent.",
+        "Évidemment, les expéditions de votre adversaire feront en sorte de vous tendre quelques pièges afin de vous ralentir."
+      ],
+      "post_img_description": ["De façon très étrange, il n'y a pas besoin de connaîtres les règles pour apprendre à jouer."],
       "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/altered.jpg"
     },
     {
-      "id": "presque-jdr-gn-hot-talks-in-the-cold-war",
+      "id": "presque-2026-jdr-gn-hot-talks-in-the-cold-war",
       "title": "Jeu de Rôle Grandeur Nature : \"Hot talks in the cold war\"",
       "category": "jds",
       "color": "--presque-activites-association",
       "start": "2026-11-15T12:30:00+01:00",
       "end": "2026-11-15T16:30:00+01:00",
       "max_participants": 18,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
+      "short_description": "Il était courant, durant la guerre froide, de risquer l'embrasement à tout moment. Nous vous proposons ici de jouer l'un de ces moments.",
+      "pre_img_description": [
+        "Le canal du Panama est au coeurs de discussions du jour. Sans lui, le commerce mondial ralentit fortement, et il est donc un atout stratégique important",
+        "Les diplomates du bloc soviétique et les diplomates américains se sont réuni.es au Panama, afin de conclure quelques accords sur l'exploitation du Canal. En parallèle, ils espèrent bien soutirer d'une façon ou d'une autre des informations plus confidentielles à leurs opposants politiques.",
+        "Au coeur de ce chaos diplomatique, la délégation du Panama, soutenue par l'Europe, espère bien tirer son épingle du jeu afin d'obtenir la propriété du canal qui traverse leur pays."
+    ],
+      "post_img_description": [
+        "Un jeu de rôle Grandeur Nature est une forme de jeu de rôle dans lequel les joueurs incarnent leurs personnages comme s'ils étaient directement dans une pièce de théâtre improvisé, sans public.",
+        "Les quelques règles nécessaire à la simulation seront expliquées au début de la partie lors d'un Briefing, et chaque faction sera accompagnée d'un maître de Jeu qui sera là pour les accompagner tout au long des négociations."
+      ],
       "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
+      "image_path": "presque/gn_william.jpg",
       "image_copyright": ["", ""]
     },
     {
-      "id": "presque-initiation-tcg-lorcana",
+      "id": "presque-2026-jdr-gn-hot-talks-in-the-cold-war",
+      "title": "Jeu de Rôle Grandeur Nature : \"Hot talks in the cold war\"",
+      "category": "jdr",
+      "color": "--presque-jdr",
+      "start": "2026-11-15T12:30:00+01:00",
+      "end": "2026-11-15T16:30:00+01:00",
+      "max_participants": 18,
+      "short_description": "Il était courant, durant la guerre froide, de risquer l'embrasement à tout moment. Nous vous proposons ici de jouer l'un de ces moments.",
+      "pre_img_description": [
+        "Le canal du Panama est au coeurs de discussions du jour. Sans lui, le commerce mondial ralentit fortement, et il est donc un atout stratégique important",
+        "Les diplomates du bloc soviétique et les diplomates américains se sont réuni.es au Panama, afin de conclure quelques accords sur l'exploitation du Canal. En parallèle, ils espèrent bien soutirer d'une façon ou d'une autre des informations plus confidentielles à leurs opposants politiques.",
+        "Au coeur de ce chaos diplomatique, la délégation du Panama, soutenue par l'Europe, espère bien tirer son épingle du jeu afin d'obtenir la propriété du canal qui traverse leur pays."
+    ],
+      "post_img_description": [
+        "Un jeu de rôle Grandeur Nature est une forme de jeu de rôle dans lequel les joueurs incarnent leurs personnages comme s'ils étaient directement dans une pièce de théâtre improvisé, sans public.",
+        "Les quelques règles nécessaire à la simulation seront expliquées au début de la partie lors d'un Briefing, et chaque faction sera accompagnée d'un maître de Jeu qui sera là pour les accompagner tout au long des négociations."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/gn_william.jpg",
+      "image_copyright": ["", ""]
+    },
+    {
+      "id": "presque-2026-initiation-tcg-lorcana",
       "title": "Initiation TCG Lorcana",
       "category": "jds",
       "color": "--presque-activites-association",
       "start": "2026-11-15T13:00:00+01:00",
       "end": "2026-11-15T17:00:00+01:00",
-      "max_participants": 8,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 0,
+      "short_description": "Disney aimant l'argent, il est évident qu'ils allaient faire un jeu de carte à collectionner un jour. Nous vous proposons ici de le découvrir.",
+      "pre_img_description": [
+        "Lorcana est un jeu d'affrontement où chaque joueur va essayer de récupérer du 'Lore' en envoyant ses personnages Disney préférés à l'aventure.",
+        "Cependant, lorsque votre personnage part à l'aventure, il devient vulnérable, et votre adversaire peut le défier afin de s'en débarasser.",
+        "Au cours de cette initiation, vous apprendrez quand il est opportun de partir à l'aventure, et quand il est intéressant de défier son adversaire... en plus des règles de bases du jeu, évidemment."
+      ],
+      "post_img_description": [
+        "De façon très étrange, il n'y a pas besoin de connaîtres les règles pour apprendre à jouer.",
+        "Une partie ne dure évidemment pas 4h (enfin, je crois. J'écris les descriptions moi, je ne sais pas jouer), mais si le jeu vous plaît, vous avez évidemment le droit de rester jouer plus longtemps."
+      ],
       "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
+      "image_path": "presque/lorcana.jpg",
       "image_copyright": ["", ""]
     },
     {
-      "id": "presque-initiation-tcg-mtg",
-      "title": "Initiation TCG Magic: The Gathering",
-      "category": "jds",
-      "color": "--presque-partenaires",
-      "start": "2026-11-15T13:00:00+01:00",
-      "end": "2026-11-15T17:00:00+01:00",
-      "max_participants": 8,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<organisateur partenaire à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
-    },
-    {
-      "id": "presque-jdr-jilan",
-      "title": "JDR Jilan",
+      "id": "presque-2026-jdr-ronde",
+      "title": "Pendant la ronde.",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T12:30:00+01:00",
       "end": "2026-11-14T16:30:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 5,
+      "pre_img_description": ["Pris dans une émeute au marché d'Ubersreik et injustement accusés de l'avoir provoquée, les personnages sont condamnés à servir temporairement dans le Guet. Entre corruption, crimes et choix douteux, leur nouvelle mission pourrait rapidement devenir bien plus dangereuse que prévu…"],
+      "post_img_description": ["Cette aventure a besoin d'un minimum de quatre aventuriers pour se produire. Les débutant.es sont évidemment les bienvenu.es."],
       "organizer": ["Jilan", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/pendant_ronde.jpg",
+      "game":"Warhammer"
     },
     {
-      "id": "presque-jdr-emile",
-      "title": "JDR Emile",
+      "id": "presque-2026-jdr-strahd",
+      "title": "Strahd doit mourir ce soir !",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T12:30:00+01:00",
       "end": "2026-11-14T17:30:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 5,
+      "pre_img_description": ["Préparez vos colliers d'ails et vos carreaux en argent car ce soir, vous partez à la chasse du vampire le plus terrible de la Barhovie."],
+      "post_img_description": ["Cette aventure est réservée à des personnes ayant des connaissances basiques des règles"],
       "organizer": ["Emile", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/strahd.jpg",
+      "game":"Donjons et Dragons"
     },
     {
-      "id": "presque-jdr-antoine",
-      "title": "JDR Antoine",
+      "id": "presque-2026-jdr-planescape",
+      "title": "Planescape",
+      "category": "jdr",
+      "color": "--presque-jdr",
+      "start": "2026-11-15T13:30:00+01:00",
+      "end": "2026-11-15T17:30:00+01:00",
+      "max_participants": 5,
+      "pre_img_description": ["Plongez dans un scénario bizarroïde, morbide et décalé pour découvrir l'univers de Planescape, le carrefour du multivers."],
+      "post_img_description": ["Cette aventure a besoin d'un minimum de quatre aventuriers pour se produire. Les débutant.es sont évidemment les bienvenu.es."],
+      "organizer": ["Emile", ""],
+      "image_path": "presque/planescape.jpg",
+      "game":"Donjons et Dragons - Planescape"
+    },
+    {
+      "id": "presque-2026-jdr-tarte",
+      "title": "La tarte de Grand'Ma",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T14:00:00+01:00",
       "end": "2026-11-14T18:00:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 5,
+      "pre_img_description": ["Vous travaillez au Service des Nouvelles Acquisitions de la bibliothèque de Châteausuif et votre première vraie mission vient de tomber: trouver la recette de la fameuse tarte aux pommes de Grandma Chichi!"],
+      "post_img_description": ["Cette aventure a besoin d'un minimum de quatre aventuriers pour se produire. Les débutant.es sont évidemment les bienvenu.es."],
       "organizer": ["Antoine", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/tarte_grand_ma.jpg",
+      "game":"Donjons et Dragons"
     },
     {
-      "id": "presque-jdr-tanguy",
-      "title": "JDR Tanguy",
+      "id": "presque-2026-jdr-Chthulu",
+      "title": "La Dernière Chanson de Robert J. Miller",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T17:00:00+01:00",
       "end": "2026-11-14T21:00:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 5,
+      "pre_img_description": [
+        "1921. En pleine prohibition, un groupe d'investigateurs variés enquêtent sur la disparition mystérieuse de Robert J. Miller, crooner en pleine ascension."
+      ],
+      "post_img_description": ["Cette aventure a besoin d'un minimum de trois aventuriers pour se produire. Les débutant.es sont évidemment les bienvenu.es."],
       "organizer": ["Tanguy", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/derniere_chanson.jpg",
+      "game":"Chthulu"
     },
     {
-      "id": "presque-jdr-deco",
-      "title": "JDR Deco",
+      "id": "presque-2026-jdr-aller-retour-samedi",
+      "title": "Un aller-retour tranquille",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T21:30:00+01:00",
       "end": "2026-11-15T01:30:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
+      "max_participants": 5,
+      "pre_img_description": [
+        "À l'occasion de ses 60 ans, le roi Edric IV a commandé une nouvelle couronne au plus grand forgeron du royaume, Aldric. Les aventuriers se voient confier une mission d'une simplicité presque déconcertante : se rendre chez le forgeron, récupérer la couronne et la rapporter au palais.",
+        "Une petite promenade, une couronne à récupérer… Qu'est-ce qui pourrait bien mal tourner ?"
+      ],
+      "post_img_description": ["Cette aventure a besoin d'un minimum de trois aventuriers pour se produire. Les débutants sont évidemment les bienvenues."],
       "organizer": ["Deco", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "image_path": "presque/aller_retour_samedi.jpg",
+      "game":"Dagerhearth"
     },
     {
-      "id": "presque-initiation-jdr-8-ans-sam-1230",
+      "id": "presque-2026-jdr-aller-retour-dimanche",
+      "title": "Un aller-retour tranquille",
+      "category": "jdr",
+      "color": "--presque-jdr",
+      "start": "2026-11-15T13:30:00+01:00",
+      "end": "2026-11-15T17:30:00+01:00",
+      "max_participants": 5,
+      "pre_img_description": [
+        "À l'occasion de ses 60 ans, le roi Edric IV a commandé une nouvelle couronne au plus grand forgeron du royaume, Aldric. Les aventuriers se voient confier une mission d'une simplicité presque déconcertante : se rendre chez le forgeron, récupérer la couronne et la rapporter au palais.",
+        "Une petite promenade, une couronne à récupérer… Qu'est-ce qui pourrait bien mal tourner ?"
+      ],
+      "post_img_description": ["Cette aventure a besoin d'un minimum de trois aventuriers pour se produire. Les débutants sont évidemment les bienvenues."],
+      "organizer": ["Deco", ""],
+      "image_path": "presque/aller_retour_dimanche.jpg",
+      "game":"Dagerhearth"
+    },
+    {
+      "id": "presque-2026-initiation-jdr-sam-1230",
       "title": "Initiation au jeu de rôle dès 8 ans",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T12:30:00+01:00",
       "end": "2026-11-14T14:00:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "max_participants": 5,
+      "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
+      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "organizer": ["Philippe", ""],
+      "image_path": "presque/initiation_dnd_samedi_12h30.jpg",
+      "game":"Initiation"
     },
     {
-      "id": "presque-initiation-jdr-8-ans-sam-1430",
+      "id": "presque-2026-initiation-jdr-sam-1430",
       "title": "Initiation au jeu de rôle dès 8 ans",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-14T14:30:00+01:00",
       "end": "2026-11-14T16:00:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "max_participants": 5,
+      "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
+      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "organizer": ["Philippe", ""],
+      "image_path": "presque/initiation_dnd_samedi_14h30.jpg",
+      "game":"Initiation"
     },
     {
-      "id": "presque-initiation-jdr-8-ans-dim-0900",
+      "id": "presque-2026-initiation-jdr-dim-0900",
       "title": "Initiation au jeu de rôle dès 8 ans",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-15T09:00:00+01:00",
       "end": "2026-11-15T10:30:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "max_participants": 5,
+      "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
+      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "organizer": ["Philippe", ""],
+      "image_path": "presque/initiation_dnd_dimanche_9h.jpg",
+      "game":"Initiation"
     },
     {
-      "id": "presque-initiation-jdr-8-ans-dim-1100",
+      "id": "presque-2026-initiation-jdr-dim-1100",
       "title": "Initiation au jeu de rôle dès 8 ans",
       "category": "jdr",
       "color": "--presque-jdr",
       "start": "2026-11-15T11:00:00+01:00",
       "end": "2026-11-15T12:30:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "max_participants": 5,
+      "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
+      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "organizer": ["Philippe", ""],
+      "image_path": "presque/initiation_dnd_dimanche_11h.jpg",
+      "game":"Initiation"
     },
     {
-      "id": "presque-jdr-gn-hot-talks-in-the-cold-war",
-      "title": "Jeu de Rôle Grandeur Nature : \"Hot talks in the cold war\"",
-      "category": "jdr",
-      "color": "--presque-jdr",
-      "start": "2026-11-15T12:30:00+01:00",
-      "end": "2026-11-15T16:30:00+01:00",
+      "id": "presque-2026-gros-jeux-black-rose-wars",
+      "title": "Les gros jeux: Black Rose Wars",
+      "category": "jds",
+      "color": "--presque-gros-jeux",
+      "start": "2026-11-14T10:30:00+01:00",
+      "end": "2026-11-14T15:30:00+01:00",
+      "max_participants": 4,
+      "pre_img_description": [
+        "Découvrir des jeux plus imposants peut parfois rebutter certain.es, et nous avons pensé à vous. Dans notre série d'animation \"Les gros jeux\", un de nos membres vous présente un de ses jeux du coeur, vous l'apprend, et vous guide lors de votre première partie.",
+        "Black Rose Wars est un jeu de deckbuilding et d'affontement dans lequel vous incarnez des mages. À l'aide d'un système d'actions planifiées, devenez le mage suprême, mais attention à ne pas trop tarder, car la rose noire elle même peut faire perdre tous les joueurs si elle accumule trop de puissance."
+      ],
+      "post_img_description": ["Il va de soi que vous n'avez pas à connaître les règles au préalable."],
+      "organizer": ["À L'abordajeux", ""],
+      "image_path": "presque/black_rose_wars.jpg"
+    },
+    {
+      "id": "presque-2026-gros-jeux-septima",
+      "title": "Les gros jeux: Septima",
+      "category": "jds",
+      "color": "--presque-gros-jeux",
+      "start": "2026-11-14T16:00:00+01:00",
+      "end": "2026-11-14T19:00:00+01:00",
+      "max_participants": 4,
+      "short_description": "",
+      "pre_img_description": [
+        "Découvrir des jeux plus imposants peut parfois rebutter certain.es, et nous avons pensé à vous. Dans notre série d'animation \"Les gros jeux\", un de nos membres vous présente un de ses jeux du coeur, vous l'apprend, et vous guide lors de votre première partie.",
+        "Septima est un jeu de placement d'ouvrier où vous allez diriger une communauté de sorcière, les envoyant récolter herbes et préparer potions afin de prouver à la Septima que vous êtes digne de lui succéder.",
+        "Le coeur du jeu repose sur le choix d'actions qui se fait en simultané, et donc de savoir correctement interpréter quel joueur.euse va effectuer quelle action à quel moment, afin d'en tirer avantage."
+      ],
+      "post_img_description": ["Il va de soi que vous n'avez pas à connaître les règles au préalable."],
+      "organizer": ["À L'abordajeux", ""],
+      "image_path": "presque/septima.jpg"
+    },
+    {
+      "id": "presque-2026-gros-jeux-battlestar-galactica",
+      "title": "Les gros jeux: Battlestar Galactica",
+      "category": "jds",
+      "color": "--presque-gros-jeux",
+      "start": "2026-11-14T20:00:00+01:00",
+      "end": "2026-11-15T00:00:00+01:00",
+      "max_participants": 6,
+      "short_description": "",
+      "pre_img_description": [
+        "Découvrir des jeux plus imposants peut parfois rebutter certain.es, et nous avons pensé à vous. Dans notre série d'animation \"Les gros jeux\", un de nos membres vous présente un de ses jeux du coeur, vous l'apprend, et vous guide lors de votre première partie.",
+        "Dans Battlestar Galactica, vous incarnez des personnages du vaisseau éponyme, avec pour but de guider ce qui reste de l'humanité vers une planète mythique: la Terre. Cependant, certains parmi vous sont des Cylons, androïdes à l'apparence humaine, qui ont pour objectif de vous empêcher de réaliser ce but.",
+        "Battlestar Galactica est un jeu à rôle caché où vous devrez défendre le vaisseau et résoudre des crises, tandis que certain.es parmis vous tentent discrètement de vous saboter. Certains Cylons étant des agents en sommeil, à la moitié du jeu certains d'entre vous pourraient bien changer d'allégeance."
+      ],
+      "post_img_description": ["Il va de soi que vous n'avez pas à connaître les règles au préalable."],
+      "organizer": ["À L'abordajeux", ""],
+      "image_path": "presque/battlestar_galactica.jpg"
+    },
+    {
+      "id": "presque-2026-gros-jeux-blood-on-the-clock-tower",
+      "title": "Les gros jeux: Blood on the Clock Tower",
+      "category": "jds",
+      "color": "--presque-gros-jeux",
+      "start": "2026-11-15T01:00:00+01:00",
+      "end": "2026-11-15T03:00:00+01:00",
       "max_participants": 18,
-      "pre_img_description": ["<description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["À L'Abordajeux", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "short_description": "",
+      "pre_img_description": [
+        "Découvrir des jeux plus imposants peut parfois rebutter certain.es, et nous avons pensé à vous. Dans notre série d'animation \"Les gros jeux\", un de nos membres vous présente un de ses jeux du coeur, vous l'apprend, et vous guide lors de votre première partie.",
+        "Blood on The Clock Tower est un jeu à rôle caché dans lequel d'honnêtes et sympathiques villageois tentent de démasquer des démons et leurs associés. Mêlant une phase de nuit durant laquelle divers acteurs tenteront de nuire ou d'aider le village, et une phase de jour durant laquelle les gens peuvent librement discuter et échanger entre eux, Blood on the Clock Tower se différencie d'autres jeux similaires par le fait que les morts continuent de jouer, essayant d'aider leurs alliés à remporter la partie depuis la tombe."
+      ],
+      "post_img_description": ["Il va de soi que vous n'avez pas à connaître les règles au préalable."],
+      "organizer": ["À L'abordajeux", ""],
+      "image_path": "presque/blood_clocktower.jpg"
     },
     {
-      "id": "presque-jdr-warhammer-1",
-      "title": "JDR Warhammer",
-      "category": "jdr",
-      "color": "--presque-jdr",
-      "start": "2026-11-15T12:30:00+01:00",
-      "end": "2026-11-15T16:30:00+01:00",
-      "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<animateur·ice à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "id": "presque-2026-gros-jeux-smallworld",
+      "title": "Les gros jeux: Small World",
+      "category": "jds",
+      "color": "--presque-gros-jeux",
+      "start": "2026-11-15T10:00:00+01:00",
+      "end": "2026-11-15T12:30:00+01:00",
+      "max_participants": 5,
+      "short_description": "",
+      "pre_img_description": [
+        "Découvrir des jeux plus imposants peut parfois rebutter certain.es, et nous avons pensé à vous. Dans notre série d'animation \"Les gros jeux\", un de nos membres vous présente un de ses jeux du coeur, vous l'apprend, et vous guide lors de votre première partie.",
+        "Dans Small World, vous allez incarner plusieurs civilisations, avec leurs phases d'expansions et de déclins. Chaque petite civilisation est composée de deux tuiles, donnant accès à deux capacités différentes.",
+        "Votre but sera de conquérir des territoires, et même si vous ne contrôlez que votre civilisation la plus récente, toutes vos civilisations en déclins continuent de vous rapporter des points. À vous d'estimer à quel moment vous pouvez vous permettre de partir en déclin, pour mieux vous étendre par la suite."
+      ],
+      "post_img_description": ["Il va de soi que vous n'avez pas à connaître les règles au préalable."],
+      "organizer": ["À L'abordajeux", ""],
+      "image_path": "presque/smallworld.jpg"
     },
     {
-      "id": "presque-jdr-warhammer-2",
-      "title": "JDR Warhammer",
-      "category": "jdr",
-      "color": "--presque-jdr",
-      "start": "2026-11-15T12:30:00+01:00",
-      "end": "2026-11-15T16:30:00+01:00",
+      "id": "presque-2026-gros-jeux-Hybris",
+      "title": "Les gros jeux: Hybris",
+      "category": "jds",
+      "color": "--presque-gros-jeux",
+      "start": "2026-11-15T13:00:00+01:00",
+      "end": "2026-11-15T17:00:00+01:00",
       "max_participants": 4,
-      "pre_img_description": ["<scénario et description à compléter>"],
-      "post_img_description": [],
-      "organizer": ["<animateur·ice à confirmer>", ""],
-      "image_path": "",
-      "image_copyright": ["", ""]
+      "short_description": "",
+      "pre_img_description": [
+        "Découvrir des jeux plus imposants peut parfois rebutter certain.es, et nous avons pensé à vous. Dans notre série d'animation \"Les gros jeux\", un de nos membres vous présente un de ses jeux du coeur, vous l'apprend, et vous guide lors de votre première partie.",
+        "Dans Hybris, vous incarnez des Olympiens, peu après la défaite des dieux primordiaux, essayant d'eux même devenir des dieux.",
+        "Dans ce jeu de placement d'ouvrier, vous allez développer des technologies, accomplir des quêtes, recruter des héros et affronter les autres futurs dieux, tentant de vous approprier en partie les mérites de leurs accomplissements. Si l'un de vous parvient à déployer tout son potentiel divin, il sera alors sacré roi de l'Olympe, et remportera la partie."
+      ],
+      "post_img_description": ["Il va de soi que vous n'avez pas à connaître les règles au préalable."],
+      "organizer": ["À L'abordajeux", ""],
+      "image_path": "presque/hybris.jpg"
     }
+
+
   ]
 }

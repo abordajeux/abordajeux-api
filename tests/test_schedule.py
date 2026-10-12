@@ -7,11 +7,11 @@ from app.config import Settings
 from app.main import create_app
 
 _FIXTURE = (Path(__file__).resolve().parent.parent / "fixtures" /
-            "presque-programme.example.json")
+            "presque-2026-programme.example.json")
 
 _PROGRAMME = {
     "activities": [{
-        "id": "presque-dnd-001",
+        "id": "presque-2026-dnd-001",
         "title": "Donjons & Dragons — La Mine de Phandelver",
         "room": "JDR Cheminee 1",
         "start": "2026-11-14T10:00:00+01:00",
@@ -39,7 +39,7 @@ def test_schedule_serves_file_verbatim(api) -> None:
     assert response.headers["cache-control"] == "public, max-age=300"
     assert response.content == raw.encode("utf-8")
     body = response.json()
-    assert body["activities"][0]["id"] == "presque-dnd-001"
+    assert body["activities"][0]["id"] == "presque-2026-dnd-001"
     assert body["rooms"] == ["JDR Cheminee 1"]
 
 
@@ -54,8 +54,7 @@ def test_schedule_missing_file(api) -> None:
 
 def test_schedule_invalid_json(api) -> None:
     application, client, _ = api
-    _programme_file(application).write_text("{not json",
-                                            encoding="utf-8")
+    _programme_file(application).write_text("{not json", encoding="utf-8")
 
     response = client.get("/schedule")
 
@@ -83,16 +82,16 @@ def test_startup_seeds_from_programme_file(tmp_path: Path) -> None:
 
     with _make_client(tmp_path, programme_text=fixture_text) as client:
         activities = client.get("/activities").json()["activities"]
-        assert {a["id"] for a in activities} == {
-            "presque-dnd-001",
-            "presque-jds-002",
-            "presque-tournoi-003",
-        }
+        assert {a["id"]
+                for a in activities} == {
+                    "presque-2026-dnd-001",
+                    "presque-2026-jds-002",
+                    "presque-2026-tournoi-003",
+                }
         assert client.get("/schedule").status_code == 200
 
 
-def test_startup_malformed_programme_does_not_crash(
-        tmp_path: Path) -> None:
+def test_startup_malformed_programme_does_not_crash(tmp_path: Path) -> None:
     with _make_client(tmp_path, programme_text="{not json") as client:
         assert client.get("/health").status_code == 200
 

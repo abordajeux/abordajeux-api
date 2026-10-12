@@ -9,7 +9,7 @@ from app import signups
 from app.seed import ActivitySeed, load_programme, main, seed_activities
 
 _FIXTURE = (Path(__file__).resolve().parent.parent / "fixtures" /
-            "presque-programme.example.json")
+            "presque-2026-programme.example.json")
 
 
 def test_load_programme_reads_fixture() -> None:
@@ -17,7 +17,7 @@ def test_load_programme_reads_fixture() -> None:
 
     assert len(seeds) == 3
     first = seeds[0]
-    assert first.id == "presque-dnd-001"
+    assert first.id == "presque-2026-dnd-001"
     assert first.title == "Donjons & Dragons — La Mine de Phandelver"
     assert first.starts_at == "2026-11-14T10:00:00+01:00"
     assert first.max_participants == 5
@@ -38,11 +38,11 @@ def test_seed_updates_max_without_losing_signups(
         "INSERT INTO activities (id, title, starts_at, max_participants) "
         "VALUES ('presque-dnd-001', 'Old', '2026-11-14 10:00:00', 5)")
     signups.reserve_signups(db,
-                            "presque-dnd-001",
+                            "presque-2026-dnd-001",
                             "p@example.com", ["Alice"],
                             verification_token="t1")
     seeds = [
-        ActivitySeed(id="presque-dnd-001",
+        ActivitySeed(id="presque-2026-dnd-001",
                      title="Donjons & Dragons — La Mine de Phandelver",
                      starts_at="2026-11-14T10:00:00+01:00",
                      max_participants=8)
@@ -50,13 +50,12 @@ def test_seed_updates_max_without_losing_signups(
 
     seed_activities(db, seeds)
 
-    row = db.execute(
-        "SELECT title, max_participants FROM activities "
-        "WHERE id = 'presque-dnd-001'").fetchone()
+    row = db.execute("SELECT title, max_participants FROM activities "
+                     "WHERE id = 'presque-dnd-001'").fetchone()
     assert row is not None
     assert row["title"] == "Donjons & Dragons — La Mine de Phandelver"
     assert row["max_participants"] == 8
-    state = signups.get_activity_signups(db, "presque-dnd-001")
+    state = signups.get_activity_signups(db, "presque-2026-dnd-001")
     assert state is not None
     assert state.pending == 1
     assert state.available == 7
@@ -64,18 +63,17 @@ def test_seed_updates_max_without_losing_signups(
 
 def test_seed_tolerates_extra_fields(tmp_path) -> None:
     path = tmp_path / "programme.json"
-    path.write_text(
-        json.dumps({
-            "activities": [{
-                "id": "x",
-                "title": "T",
-                "start": "2026-11-14T10:00:00+01:00",
-                "max_participants": 4,
-                "room": "Scene",
-                "description": "d",
-            }]
-        }),
-        encoding="utf-8")
+    path.write_text(json.dumps({
+        "activities": [{
+            "id": "x",
+            "title": "T",
+            "start": "2026-11-14T10:00:00+01:00",
+            "max_participants": 4,
+            "room": "Scene",
+            "description": "d",
+        }]
+    }),
+                    encoding="utf-8")
 
     seeds = load_programme(path)
 

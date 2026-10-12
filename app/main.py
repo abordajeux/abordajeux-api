@@ -293,9 +293,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             sender_email=str(body.sender_email),
             message=body.message,
         )
-        print("HELLO WORLD")
-        print(settings.mail_contact_email)
-
         sender.send(
             to_email=settings.mail_contact_email,
             content=content,
@@ -333,7 +330,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         sender: Annotated[MailSender, Depends(get_mail_sender)],
         settings: Annotated[Settings, Depends(get_settings)],
     ) -> BenevoleOk:
-        print("HELLO")
         applicant_email = str(body.sender_email)
         if not email.has_valid_mx(applicant_email):
             raise APIError(422, {

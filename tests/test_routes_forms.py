@@ -176,7 +176,7 @@ def test_benevole_form_ok_sends_welcome_and_notification(api) -> None:
     assert welcome_to == "visitor@example.com"
     assert welcome_reply_to == "benevoles@test.local"
     assert welcome_content.subject == "Devenir bénévole — À L'Abordajeux"
-    assert "TODO: MAIL CONTENT FOR JOINING PROCEDURE" in welcome_content.text
+    assert "merci de l'intérêt que vous portez aux presque 24h du jeu" in welcome_content.text
     assert "https://app.benevolus.ch/rejoindre/test-org" in welcome_content.text
     assert "tok-123" in welcome_content.text
     assert "https://app.benevolus.ch/rejoindre/test-org" in welcome_content.html

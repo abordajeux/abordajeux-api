@@ -1,7 +1,7 @@
 {
   "activities": [
     {
-      "id": "presque-dnd-001",
+      "id": "presque-2026-dnd-001",
       "title": "Donjons & Dragons — La Mine de Phandelver",
       "room": "JDR Cheminee 1",
       "start": "2026-11-14T10:00:00+01:00",
@@ -13,7 +13,7 @@
       "image_copyright": ""
     },
     {
-      "id": "presque-jds-002",
+      "id": "presque-2026-jds-002",
       "title": "Soiree jeux de societe — Decouverte",
       "room": "Salle principale",
       "start": "2026-11-14T18:00:00+01:00",
@@ -25,7 +25,7 @@
       "image_copyright": ""
     },
     {
-      "id": "presque-tournoi-003",
+      "id": "presque-2026-tournoi-003",
       "title": "Tournoi de Carcassonne",
       "room": "Scene",
       "start": "2026-11-15T14:00:00+01:00",

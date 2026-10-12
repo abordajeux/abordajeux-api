@@ -14,14 +14,12 @@ class Settings:
     benevolus_org_link: str = ""
     benevolus_token: str = ""
     rate_limit_seconds: int = 30
-    verify_base_url: str = "https://abordajeux.github.io/presque/verify"
+    verify_base_url: str = ""
     max_body_bytes: int = 65536
 
 
 def load_settings() -> Settings:
     cors_raw = os.environ.get("CORS_ORIGINS", "")
-    print("HELLO ")
-    print(cors_raw)
     return Settings(
         database_path=os.environ.get("DATABASE_PATH", "abordajeux.db"),
         programme_path=os.environ.get("PROGRAMME_PATH", "programme.json"),
@@ -35,7 +33,6 @@ def load_settings() -> Settings:
         benevolus_org_link=os.environ.get("BENEVOLUS_ORG_LINK", ""),
         benevolus_token=os.environ.get("BENEVOLUS_TOKEN", ""),
         rate_limit_seconds=int(os.environ.get("RATE_LIMIT_SECONDS", "30")),
-        verify_base_url=os.environ.get(
-            "VERIFY_BASE_URL", "https://abordajeux.github.io/presque/verify"),
+        verify_base_url=os.environ.get("VERIFY_BASE_URL", ""),
         max_body_bytes=int(os.environ.get("MAX_BODY_BYTES", "65536")),
     )
