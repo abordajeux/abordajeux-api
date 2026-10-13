@@ -15,7 +15,6 @@
       "post_img_description": [
         "Vous aimeriez certainements quelques informations pratiques.",
         "",
-        "Le tournoi est un tournoi de Pauper SUL district à 32 places, en REL compétitif.",
         "Le prix d'inscription est de 20 CHF, qui comprend l'entrée aux presque 24h du jeu, à payer sur place.",
         "Il y aura de 4 - 6 rondes Suisses (selon le nombre de participants), suivies d'un top 8." ,
         "Les portes ouvrent à 10h, et le tournoi commence à 10h30.",
@@ -40,11 +39,12 @@
       "color": "--presque-partenaires",
       "start": "2026-11-14T21:00:00+01:00",
       "end": "2026-11-15T00:00:00+01:00",
-      "max_participants": 8,
+      "max_participants": 24,
       "pre_img_description": ["L'une des grande marque de fabrique de MtG Neuch' est l'organisation régulière de drafts aux règles altérées, pour des parties non conventionelles, mais plus mémorables."],
       "post_img_description": [
         "Les joueur.euses seront réparties en pods de 6-10, en fonction du nombre d'inscrits, avec une préférence pour des pods de 8.",
-        "Il s'agit d'un draft \"classique\", mais certaines règles du jeu seront altérées pendant les parties. La variation exacte n'est pas encore connue, mais elle vous sera bientôt communiquée.",
+        "Il s'agit d'un draft \"classique\", mais certaines règles du jeu seront altérées pendant les parties. Il est fort probable qu'il s'agisse d'un Omniscience draft.",
+        "Lors d'un Omniscience draft, chaque joueur commencera la partie avec un emblème qui dit \"Vous pouvez jouer des sorts depuis votre main sans payer leur coût de mana\" et \"0: ajouter un mana de chaque couleur à votre réserve. N'activez cette capacité qu'une fois par tour\". Chaque joueur ne commencera sa partie qu'avec 3 cartes en main de départ.",
         "Dans tous les cas, vous saurez avant de drafter, quelles règles ont changé par rapport aux règles de base.",
         "Une finance d'inscription de 20.- pour le draft est demandée, à payer sur place."
       ],
