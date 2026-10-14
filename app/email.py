@@ -59,7 +59,7 @@ Chère personne, bonjour,
 Vous vous êtes inscrit·e pour {activity_title} lors des presques 24h du jeu. Cette activité aura lieu le {date_str} à {time_str} si des événements fâcheux ne nous font pas modifier l'horaire.
 Pour confirmer votre inscription, il sera nécessaire de cliquer sur le lien suivant:
     {verify_link}
-Si vous avez la moindre question, vous pouvez nous contacter à {contact_email}
+Si vous avez la moindre question, ou en cas de désistement, vous pouvez nous contacter à {contact_email}
 
 Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre inscription.
 
@@ -72,10 +72,11 @@ L'équipage de À L'abordajeux
 <p>Chère personne, bonjour,</p>
 <p>Vous vous êtes inscrit·e pour {safe_title} lors des presques 24h du jeu. Cette activité aura lieu
 le {date_str} à {time_str} si des événements fâcheux ne nous font pas modifier l'horaire.</p>
-<p>Pour confirmer votre inscription, il sera nécessaire de cliquer sur le lien suivant: <a href="{safe_link}">{safe_link}</a></p>
-<p>Si vous avez la moindre question, vous pouvez nous contacter à <a href="mailto:{safe_contact}">{safe_contact}</a></p>
+<p><b>Pour confirmer votre inscription</b>, il sera nécessaire de cliquer sur le lien suivant: <a href="{safe_link}">{safe_link}</a></p>
+<p>Si vous avez la moindre question, ou en cas de désistement, vous pouvez nous contacter à <a href="mailto:{safe_contact}">{safe_contact}</a></p>
 
-<p>Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre inscription.</p>
+<p><b>Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre inscription.</b></p>
+
 
 <p>Nous nous réjouissons de vous accueillir lors des Presques 24 heures.</p>
 
