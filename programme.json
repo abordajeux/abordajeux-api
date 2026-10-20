@@ -26,9 +26,8 @@
         "Exemple de répartition à 32 joueur.euses": "",
         "1er": "environ 25% du prize pool",
         "2ème": "environ 20% du prize pool",
-        "3-4": "environ 10% du prize pool chacun.e",
-        "5-8": "environ 7% du prize pool chacun.e",
-        "9-12": "le reste"
+        "3-4": "environ 12% du prize pool chacun.e",
+        "5-8": "le reste"
       }
     },
     {
@@ -43,9 +42,9 @@
       "pre_img_description": ["L'une des grande marque de fabrique de MtG Neuch' est l'organisation régulière de drafts aux règles altérées, pour des parties non conventionelles, mais plus mémorables."],
       "post_img_description": [
         "Les joueur.euses seront réparties en pods de 6-10, en fonction du nombre d'inscrits, avec une préférence pour des pods de 8.",
-        "Il s'agit d'un draft \"classique\", mais certaines règles du jeu seront altérées pendant les parties. Il est fort probable qu'il s'agisse d'un Omniscience draft.",
+        "Et nous sommes heureux de vous annoncer qu'il s'agira d'un Omniscience Draft",
         "Lors d'un Omniscience draft, chaque joueur commencera la partie avec un emblème qui dit \"Vous pouvez jouer des sorts depuis votre main sans payer leur coût de mana\" et \"0: ajouter un mana de chaque couleur à votre réserve. N'activez cette capacité qu'une fois par tour\". Chaque joueur ne commencera sa partie qu'avec 3 cartes en main de départ.",
-        "Dans tous les cas, vous saurez avant de drafter, quelles règles ont changé par rapport aux règles de base.",
+        "Lors d'un Omniscience draft, la structure du tournoi est un peu altérée, avec des matchs en Bo1 en rondes robin de 12 minutes, vous permettant de jouer une fois contre chaque autre personne du draft.",
         "Une finance d'inscription de 20.- pour le draft est demandée, à payer sur place."
       ],
       "organizer": ["MTG Neuch'", ""],
