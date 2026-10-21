@@ -235,6 +235,46 @@
     },
 
     {
+      "id": "presque-2026-fonds-cales-sam",
+      "title": "Les fonds de câles",
+      "category": "jds",
+      "color": "--presque-activites-association",
+      "start": "2026-11-14T12:00:00+01:00",
+      "end": "2026-11-14T18:00:00+01:00",
+      "max_participants": 0,
+      "short_description":"Une personne étrange vous invite à découvrir des jeux que personne ne connaît.",
+      "pre_img_description": [
+        "Certaines personnes connaissent des jeux obscurs et oubliés de tous. Des trésors qui gisent au fond de la câle.",
+        "Au moins l'une de ces personnes est présente lors de l'événement et se propose de vous faire découvrir les plus belles pépites de son coffre personnel.",
+        "Si vous connaissez tous les jeux présentés, vous gagnerez le plus précieux de tous les prix: le respect d'une personne que vous ne connaissiez pas précédemment."
+      ],
+      "post_img_description": [
+        "Le but étant de vous faire découvrir des jeux que personne ne connaît, il va de soi qu'aucune connaissance préalable n'est nécessaire."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/fond_cale.jpg"
+    },
+    {
+      "id": "presque-2026-fonds-cales-dim",
+      "title": "Les fonds de câles",
+      "category": "jds",
+      "color": "--presque-activites-association",
+      "start": "2026-11-15T11:00:00+01:00",
+      "end": "2026-11-15T16:00:00+01:00",
+      "max_participants": 0,
+      "short_description":"Une personne étrange vous invite à découvrir des jeux que personne ne connaît.",
+      "pre_img_description": [
+        "Certaines personnes connaissent des jeux obscurs et oubliés de tous. Des trésors qui gisent au fond de la câle.",
+        "Au moins l'une de ces personnes est présente lors de l'événement et se propose de vous faire découvrir les plus belles pépites du coffre au trésor.",
+        "Si vous connaissez tous les jeux présentés, vous gagnerez le plus précieux de tous les prix: le respect d'une personne que vous ne connaissiez pas précédemment."
+      ],
+      "post_img_description": [
+        "Le but étant de vous faire découvrir des jeux que personne ne connaît, il va de soi qu'aucune connaissance préalable n'est nécessaire."
+      ],
+      "organizer": ["À L'Abordajeux", ""],
+      "image_path": "presque/fond_cale.jpg"
+    },
+    {
       "id": "presque-2026-wargames-sam-1330",
       "title": "Initiation à Warhammer 40'000",
       "category": "jds",
