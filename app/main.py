@@ -222,12 +222,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             })
 
         token = uuid.uuid4().hex
+        participant_names = [participant.name
+                             for participant in body.participants]
         try:
             result = signups.reserve_signups(
                 conn,
                 activity_id,
                 contact_email,
-                [participant.name for participant in body.participants],
+                participant_names,
                 verification_token=token,
             )
         except signups.ActivityNotFound as exc:
@@ -254,6 +256,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 starts_at=result.activity_starts_at,
                 verify_link=verify_link,
                 contact_email=settings.mail_contact_email,
+                participant_names=participant_names,
             )
             message = WAITLISTED_MSG.format(email=contact_email)
         else:
@@ -262,6 +265,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 starts_at=result.activity_starts_at,
                 verify_link=verify_link,
                 contact_email=settings.mail_contact_email,
+                participant_names=participant_names,
             )
             message = SIGNUP_OK_MSG.format(email=contact_email)
         sender.send(to_email=contact_email, content=content)

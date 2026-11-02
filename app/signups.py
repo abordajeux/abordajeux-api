@@ -159,7 +159,7 @@ class ConfirmOutcome:
 _TOKEN_ROWS_SQL = "SELECT activity_id FROM signups WHERE verification_token = ?"
 _LIVE_SIGNUP_SQL = (
     "SELECT 1 FROM signups WHERE verification_token = ? "
-    "AND (confirmed_at IS NOT NULL OR created_at > datetime('now', '-24 hours')) LIMIT 1"
+    "AND (confirmed_at IS NOT NULL OR created_at > datetime('now', '-48 hours')) LIMIT 1"
 )
 _CONFIRM_TOKEN_SQL = ("UPDATE signups SET confirmed_at = CURRENT_TIMESTAMP "
                       "WHERE verification_token = ? AND confirmed_at IS NULL")
@@ -167,7 +167,7 @@ _TOKEN_POSITION_SQL = (
     "SELECT a.max_participants, "
     "(SELECT COUNT(*) FROM signups s2 "
     " WHERE s2.activity_id = s.activity_id "
-    " AND (s2.confirmed_at IS NOT NULL OR s2.created_at > datetime('now', '-24 hours')) "
+    " AND (s2.confirmed_at IS NOT NULL OR s2.created_at > datetime('now', '-48 hours')) "
     " AND (s2.created_at, s2.rowid) < (s.created_at, s.rowid)) AS ahead "
     "FROM signups s JOIN activities a ON a.id = s.activity_id "
     "WHERE s.verification_token = ? ORDER BY s.rowid LIMIT 1")
@@ -209,7 +209,7 @@ _PROMOTIONS_SQL = (
     "WHERE s.confirmed_at IS NOT NULL AND s.promoted_at IS NULL "
     "AND (SELECT COUNT(*) FROM signups s2 "
     "     WHERE s2.activity_id = s.activity_id "
-    "     AND (s2.confirmed_at IS NOT NULL OR s2.created_at > datetime('now', '-24 hours')) "
+    "     AND (s2.confirmed_at IS NOT NULL OR s2.created_at > datetime('now', '-48 hours')) "
     "     AND (s2.created_at, s2.rowid) < (s.created_at, s.rowid)) < a.max_participants "
     "ORDER BY s.activity_id, s.created_at, s.rowid")
 _SET_PROMOTED_BY_ROWID_SQL = (

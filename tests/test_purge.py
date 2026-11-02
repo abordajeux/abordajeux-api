@@ -43,7 +43,7 @@ def test_purge_deletes_only_expired_unconfirmed(
         db: sqlite3.Connection) -> None:
     seed_activity(db, "a1", 5)
     insert_signup(db, "a1", name="AgedPending", token="t1",
-                  age=timedelta(hours=25))
+                  age=timedelta(hours=49))
     insert_signup(db, "a1", name="FreshPending", token="t2")
     insert_signup(db, "a1", name="AgedConfirmed", token="t3", confirmed=True,
                   age=timedelta(hours=30))
@@ -68,7 +68,7 @@ def test_purge_main_runs_end_to_end(tmp_path, monkeypatch, capsys) -> None:
     db_mod.init_schema(conn)
     seed_activity(conn)
     insert_signup(conn, "a1", name="AgedPending", token="t1",
-                  age=timedelta(hours=25))
+                  age=timedelta(hours=49))
     conn.close()
 
     assert main() == 0

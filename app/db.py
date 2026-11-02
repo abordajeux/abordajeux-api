@@ -41,7 +41,7 @@ LEFT JOIN (
     SELECT s.*, ROW_NUMBER() OVER (PARTITION BY s.activity_id
                                    ORDER BY s.created_at, s.rowid) AS pos
     FROM signups s
-    WHERE s.confirmed_at IS NOT NULL OR s.created_at > datetime('now', '-24 hours')
+    WHERE s.confirmed_at IS NOT NULL OR s.created_at > datetime('now', '-48 hours')
 ) sub ON sub.activity_id = a.id
 GROUP BY a.id, a.max_participants;
 """

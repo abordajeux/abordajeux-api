@@ -128,6 +128,7 @@ def test_signup_ok_sends_email_and_reserves(api) -> None:
     assert reply_to is None
     assert content.subject == email.SUBJECT
     assert "D&D — La Mine de Phandelver" in content.text
+    assert "Personnes inscrites : Alice, Bob." in content.text
     assert "?token=" in content.text
 
     conn = db_mod.connect(application.state.settings.database_path)
@@ -281,7 +282,7 @@ def test_verify_missing_body(api) -> None:
 def test_verify_expired(api) -> None:
     application, client, _ = api
     _seed(application, "a1", 5)
-    _signup_row(application, token="aged", age=timedelta(hours=25))
+    _signup_row(application, token="aged", age=timedelta(hours=49))
 
     response = client.post("/verify", json={"token": "aged"})
     assert response.status_code == 410
@@ -357,6 +358,7 @@ def test_signup_full_individual_joins_waitlist(api) -> None:
     assert content.subject == email.WAITLIST_SUBJECT
     assert "liste d'attente" in content.text
     assert "D&D — La Mine de Phandelver" in content.text
+    assert "Personne inscrite : Solo." in content.text
     assert "?token=" in content.text
 
     activity = client.get("/activities/a1").json()

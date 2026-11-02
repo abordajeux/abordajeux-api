@@ -9,7 +9,7 @@ from app import signups
 from app.seed import ActivitySeed, load_programme, main, seed_activities
 
 _FIXTURE = (Path(__file__).resolve().parent.parent / "fixtures" /
-            "presque-2026-programme.example.json")
+            "presque-programme.example.json")
 
 
 def test_load_programme_reads_fixture() -> None:
@@ -36,7 +36,7 @@ def test_seed_updates_max_without_losing_signups(
         db: sqlite3.Connection) -> None:
     db.execute(
         "INSERT INTO activities (id, title, starts_at, max_participants) "
-        "VALUES ('presque-dnd-001', 'Old', '2026-11-14 10:00:00', 5)")
+        "VALUES ('presque-2026-dnd-001', 'Old', '2026-11-14 10:00:00', 5)")
     signups.reserve_signups(db,
                             "presque-2026-dnd-001",
                             "p@example.com", ["Alice"],
@@ -51,7 +51,7 @@ def test_seed_updates_max_without_losing_signups(
     seed_activities(db, seeds)
 
     row = db.execute("SELECT title, max_participants FROM activities "
-                     "WHERE id = 'presque-dnd-001'").fetchone()
+                     "WHERE id = 'presque-2026-dnd-001'").fetchone()
     assert row is not None
     assert row["title"] == "Donjons & Dragons — La Mine de Phandelver"
     assert row["max_participants"] == 8

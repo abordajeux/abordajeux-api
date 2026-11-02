@@ -7,7 +7,7 @@ from app.config import Settings
 from app.main import create_app
 
 _FIXTURE = (Path(__file__).resolve().parent.parent / "fixtures" /
-            "presque-2026-programme.example.json")
+            "presque-programme.example.json")
 
 _PROGRAMME = {
     "activities": [{

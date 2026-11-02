@@ -13,7 +13,7 @@ from app.email import (
 )
 
 _DELETE_EXPIRED_SQL = ("DELETE FROM signups WHERE confirmed_at IS NULL "
-                       "AND created_at <= datetime('now', '-24 hours')")
+                       "AND created_at <= datetime('now', '-48 hours')")
 
 
 def purge_expired(conn: sqlite3.Connection) -> int:

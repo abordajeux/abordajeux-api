@@ -42,26 +42,37 @@ def _format_fr(starts_at: datetime) -> tuple[str, str]:
     return date_str, time_str
 
 
+def _names_line(participant_names: list[str]) -> tuple[str, str]:
+    label = ("Personne inscrite"
+             if len(participant_names) == 1 else "Personnes inscrites")
+    names = ", ".join(participant_names)
+    safe_names = ", ".join(html.escape(name) for name in participant_names)
+    return f"{label} : {names}.", f"{label} : {safe_names}."
+
+
 def build_verification_email(
     *,
     activity_title: str,
     starts_at: datetime,
     verify_link: str,
     contact_email: str,
+    participant_names: list[str],
 ) -> EmailContent:
     date_str, time_str = _format_fr(starts_at)
     safe_title = html.escape(activity_title)
     safe_link = html.escape(verify_link)
     safe_contact = html.escape(contact_email)
+    names_line, safe_names_line = _names_line(participant_names)
 
     text = f"""
 Chère personne, bonjour,
 Vous vous êtes inscrit·e pour {activity_title} lors des presques 24h du jeu. Cette activité aura lieu le {date_str} à {time_str} si des événements fâcheux ne nous font pas modifier l'horaire.
+{names_line}
 Pour confirmer votre inscription, il sera nécessaire de cliquer sur le lien suivant:
     {verify_link}
 Si vous avez la moindre question, ou en cas de désistement, vous pouvez nous contacter à {contact_email}
 
-Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre inscription.
+Ce lien expirera dans 48 heures. Passé ce délai, nous annulerons automatiquement votre inscription.
 
 Nous nous réjouissons de vous accueillir lors des Presques 24 heures.
 
@@ -72,10 +83,11 @@ L'équipage de À L'abordajeux
 <p>Chère personne, bonjour,</p>
 <p>Vous vous êtes inscrit·e pour {safe_title} lors des presques 24h du jeu. Cette activité aura lieu
 le {date_str} à {time_str} si des événements fâcheux ne nous font pas modifier l'horaire.</p>
+<p><b>{safe_names_line}</b></p>
 <p><b>Pour confirmer votre inscription</b>, il sera nécessaire de cliquer sur le lien suivant: <a href="{safe_link}">{safe_link}</a></p>
 <p>Si vous avez la moindre question, ou en cas de désistement, vous pouvez nous contacter à <a href="mailto:{safe_contact}">{safe_contact}</a></p>
 
-<p><b>Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre inscription.</b></p>
+<p><b>Ce lien expirera dans 48 heures. Passé ce délai, nous annulerons automatiquement votre inscription.</b></p>
 
 
 <p>Nous nous réjouissons de vous accueillir lors des Presques 24 heures.</p>
@@ -92,21 +104,24 @@ def build_waitlist_email(
     starts_at: datetime,
     verify_link: str,
     contact_email: str,
+    participant_names: list[str],
 ) -> EmailContent:
     date_str, time_str = _format_fr(starts_at)
     safe_title = html.escape(activity_title)
     safe_link = html.escape(verify_link)
     safe_contact = html.escape(contact_email)
+    names_line, safe_names_line = _names_line(participant_names)
 
     text = f"""
 Chère personne, bonjour,
 L'activité {activity_title} du {date_str} à {time_str} est complète : vous avez été ajouté·e à la liste d'attente.
+{names_line}
 Pour confirmer votre intérêt, il sera nécessaire de cliquer sur le lien suivant:
     {verify_link}
 Si une place se libère, nous vous enverrons un email — votre place sera alors réservée automatiquement, sans action de votre part.
 Si vous avez la moindre question, vous pouvez nous contacter à {contact_email}
 
-Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre inscription sur la liste d'attente.
+Ce lien expirera dans 48 heures. Passé ce délai, nous annulerons automatiquement votre inscription sur la liste d'attente.
 
 Nous nous réjouissons de vous accueillir lors des Presques 24 heures.
 
@@ -117,12 +132,13 @@ L'équipage de À L'abordajeux
 <p>Chère personne, bonjour,</p>
 <p>L'activité {safe_title} du {date_str} à {time_str} est complète : vous avez été ajouté·e à la
 liste d'attente.</p>
+<p><b>{safe_names_line}</b></p>
 <p>Pour confirmer votre intérêt, il sera nécessaire de cliquer sur le lien suivant: <a href="{safe_link}">{safe_link}</a></p>
 <p>Si une place se libère, nous vous enverrons un email — votre place sera alors réservée
 automatiquement, sans action de votre part.</p>
 <p>Si vous avez la moindre question, vous pouvez nous contacter à <a href="mailto:{safe_contact}">{safe_contact}</a></p>
 
-<p>Ce lien expirera dans 24 heures. Passé ce délai, nous annulerons automatiquement votre
+<p>Ce lien expirera dans 48 heures. Passé ce délai, nous annulerons automatiquement votre
 inscription sur la liste d'attente.</p>
 
 <p>Nous nous réjouissons de vous accueillir lors des Presques 24 heures.</p>

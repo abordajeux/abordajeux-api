@@ -46,7 +46,7 @@ def insert_signup(
 
 def expire_and_delete(conn: sqlite3.Connection, token: str) -> None:
     conn.execute(
-        "UPDATE signups SET created_at = datetime('now', '-25 hours') "
+        "UPDATE signups SET created_at = datetime('now', '-49 hours') "
         "WHERE verification_token = ?", (token, ))
     conn.execute("DELETE FROM signups WHERE verification_token = ?",
                  (token, ))
@@ -164,7 +164,7 @@ def test_reserve_empty_participants_rejected(db: sqlite3.Connection) -> None:
 def test_aged_pending_not_counted_but_fresh_is(
         db: sqlite3.Connection) -> None:
     seed_activity(db, "a1", 5)
-    insert_signup(db, "a1", name="OldPending", age=timedelta(hours=25))
+    insert_signup(db, "a1", name="OldPending", age=timedelta(hours=49))
     insert_signup(db, "a1", name="FreshPending", age=timedelta(minutes=5))
 
     result = signups.get_activity_signups(db, "a1")
@@ -308,7 +308,7 @@ def test_newcomer_cannot_jump_pending_waitlisted(
         db: sqlite3.Connection) -> None:
     seed_activity(db, "a1", 1)
     insert_signup(db, "a1", name="AgedSeated", token="t1",
-                  age=timedelta(hours=25))
+                  age=timedelta(hours=49))
     insert_signup(db, "a1", name="EarlyQueued", token="t2")
 
     result = signups.reserve_signups(db,
@@ -327,7 +327,7 @@ def test_newcomer_cannot_jump_confirmed_waitlisted(
         db: sqlite3.Connection) -> None:
     seed_activity(db, "a1", 1)
     insert_signup(db, "a1", name="AgedSeated", token="t1",
-                  age=timedelta(hours=25))
+                  age=timedelta(hours=49))
     insert_signup(db, "a1", name="EarlyQueued", token="t2", confirmed=True)
 
     result = signups.reserve_signups(db,
@@ -381,7 +381,7 @@ def test_confirm_idempotent_when_already_confirmed(
 def test_confirm_expired_when_all_aged_and_unconfirmed(
         db: sqlite3.Connection) -> None:
     seed_activity(db, "a1", 5)
-    insert_signup(db, "a1", name="Late", token="tok", age=timedelta(hours=25))
+    insert_signup(db, "a1", name="Late", token="tok", age=timedelta(hours=49))
 
     outcome = signups.confirm_by_token(db, "tok")
 

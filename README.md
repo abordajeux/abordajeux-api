@@ -92,7 +92,7 @@ explicit re-seeds; with no argument it reads `PROGRAMME_PATH`.
 ## Cron jobs (host crontab)
 
 ```cron
-# hourly purge: delete >24h-unconfirmed signups, then promote + email the waiting list
+# hourly purge: delete >48h-unconfirmed signups, then promote + email the waiting list
 0 * * * * docker exec abordajeux_api python -m app.purge
 
 # daily backup of the bind-mounted SQLite file

@@ -39,6 +39,7 @@ def test_build_verification_email_contains_required_phrases() -> None:
         starts_at=_STARTS_AT,
         verify_link="https://abordajeux.github.io/presque/verify?token=abc",
         contact_email="contact@abordajeux.ch",
+        participant_names=["Alice", "Bob"],
     )
 
     assert content.subject == "Confirmez votre inscription — Presques 24h du Jeu"
@@ -48,14 +49,16 @@ def test_build_verification_email_contains_required_phrases() -> None:
             "D&D — La Mine de Phandelver",
             "14 novembre 2026",
             "10:00",
+            "Personnes inscrites : Alice, Bob.",
             "https://abordajeux.github.io/presque/verify?token=abc",
             "contact@abordajeux.ch",
-            "expirera dans 24",
+            "expirera dans 48",
             "L'équipage de À L'abordajeux",
     ):
         assert phrase in content.text
 
     assert "D&amp;D — La Mine de Phandelver" in content.html
+    assert "Personnes inscrites : Alice, Bob." in content.html
     assert 'href="https://abordajeux.github.io/presque/verify?token=abc"' in content.html
     assert 'href="mailto:contact@abordajeux.ch"' in content.html
     assert content.html.count("<p>") == content.html.count("</p>")
@@ -67,11 +70,14 @@ def test_build_verification_email_escapes_html() -> None:
         starts_at=_STARTS_AT,
         verify_link="https://example/verify?t=a&b=c",
         contact_email="c@example.ch",
+        participant_names=["<i>Alice</i> & Bob"],
     )
 
     assert "&lt;script&gt;" in content.html
     assert "<script>x</script>" not in content.html
     assert "&amp;b=c" in content.html
+    assert "&lt;i&gt;Alice&lt;/i&gt; &amp; Bob" in content.html
+    assert "<i>Alice</i>" not in content.html
 
 
 def test_build_waitlist_email_contains_required_phrases() -> None:
@@ -80,6 +86,7 @@ def test_build_waitlist_email_contains_required_phrases() -> None:
         starts_at=_STARTS_AT,
         verify_link="https://abordajeux.github.io/presque/verify?token=abc",
         contact_email="contact@abordajeux.ch",
+        participant_names=["Alice"],
     )
 
     assert content.subject == "Vous êtes sur la liste d'attente — Presques 24h du Jeu"
@@ -90,15 +97,17 @@ def test_build_waitlist_email_contains_required_phrases() -> None:
             "14 novembre 2026",
             "10:00",
             "liste d'attente",
+            "Personne inscrite : Alice.",
             "https://abordajeux.github.io/presque/verify?token=abc",
             "contact@abordajeux.ch",
             "Si une place se libère",
-            "expirera dans 24",
+            "expirera dans 48",
             "L'équipage de À L'abordajeux",
     ):
         assert phrase in content.text
 
     assert "D&amp;D — La Mine de Phandelver" in content.html
+    assert "Personne inscrite : Alice." in content.html
     assert 'href="https://abordajeux.github.io/presque/verify?token=abc"' in content.html
     assert 'href="mailto:contact@abordajeux.ch"' in content.html
     assert content.html.count("<p>") == content.html.count("</p>")
@@ -133,11 +142,13 @@ def test_build_waitlist_email_escapes_html() -> None:
         starts_at=_STARTS_AT,
         verify_link="https://example/verify?t=a&b=c",
         contact_email="c@example.ch",
+        participant_names=["<i>Alice</i>"],
     )
 
     assert "&lt;script&gt;" in content.html
     assert "<script>x</script>" not in content.html
     assert "&amp;b=c" in content.html
+    assert "&lt;i&gt;Alice&lt;/i&gt;" in content.html
 
 
 def test_build_contact_form_email_contains_fields() -> None:
