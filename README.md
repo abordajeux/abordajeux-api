@@ -50,6 +50,7 @@ manual `mkdir`.
 | `BENEVOLUS_ORG_LINK` | link to the org's join page on benevolus.ch — quoted in the volunteer welcome email |
 | `BENEVOLUS_TOKEN` | invitation token shown alongside the link in the welcome email |
 | `RATE_LIMIT_SECONDS` | minimum seconds between POSTs (signup + form endpoints) per IP |
+| `DNS_RESOLVERS` | comma-separated DNS server IPs used by the MX pre-check (empty = system resolvers). Set to `1.1.1.1,8.8.8.8` if the container's own DNS is unreachable — lookups then go straight to public resolvers |
 | `MAX_BODY_BYTES` | request-body cap (413 before parsing); 64 KB ≈ 10× the largest legit payload |
 | `VERIFY_BASE_URL` | static site's verify page; the API appends `?token=…` |
 
@@ -117,6 +118,16 @@ and a notification to `MAIL_BENEVOLE_EMAIL` (`reply_to` = the applicant). The ad
 same DNS MX check as signups because the API sends mail *to* it — a dead domain would otherwise
 silently swallow the application. The joining-instructions body is a visible `TODO` placeholder
 pending the operator's final copy.
+
+### MX pre-check semantics
+
+The check rejects an address only on a **definitive** negative answer: `NXDOMAIN` (the domain
+does not exist — catches `gmaill.com`-style typos) or a domain with **no mail-capable records at
+all** (neither MX nor, per RFC 5321's implicit-MX fallback, an A/AAAA record). Resolver
+malfunctions — timeouts, refused queries, unreachable resolvers — **fail open**: the signup
+proceeds (a warning is logged). This mirrors the trade-off of the outbound check: the check
+exists to catch typos, not to gate availability on the Pi's container DNS being healthy. If the
+container's DNS is flaky, set `DNS_RESOLVERS=1.1.1.1,8.8.8.8` so lookups bypass it entirely.
 
 ## Operations
 

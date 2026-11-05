@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 import httpx
 import pytest
 from dns.exception import DNSException, Timeout
+from dns.resolver import NXDOMAIN, NoAnswer, NoNameservers
 
 from app import email
 
@@ -296,24 +297,74 @@ def test_mx_records_exist_true(monkeypatch: pytest.MonkeyPatch) -> None:
     assert email.mx_records_exist("example.com") is True
 
 
-def test_mx_records_exist_false_on_dns_failure(
+def test_mx_records_exist_false_on_nxdomain(
         monkeypatch: pytest.MonkeyPatch) -> None:
 
     def _raise(*args: object, **kwargs: object) -> None:
-        raise DNSException("no mx")
+        raise NXDOMAIN("domain does not exist")
 
     monkeypatch.setattr(email._resolver, "resolve", _raise)
     assert email.mx_records_exist("gmaill.com") is False
 
 
-def test_mx_records_exist_false_on_timeout(
+def test_mx_records_exist_true_on_timeout(
         monkeypatch: pytest.MonkeyPatch) -> None:
 
     def _raise(*args: object, **kwargs: object) -> None:
         raise Timeout("dns slow")
 
     monkeypatch.setattr(email._resolver, "resolve", _raise)
-    assert email.mx_records_exist("slow.example.com") is False
+    assert email.mx_records_exist("slow.example.com") is True
+
+
+def test_mx_records_exist_true_on_resolver_failure(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+
+    def _raise(*args: object, **kwargs: object) -> None:
+        raise NoNameservers("all resolvers refused")
+
+    monkeypatch.setattr(email._resolver, "resolve", _raise)
+    assert email.mx_records_exist("broken.example.com") is True
+
+
+def test_mx_records_exist_true_on_implicit_mx(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    calls: list[str] = []
+
+    def _resolve(domain: str, rdtype: str) -> list[str]:
+        calls.append(rdtype)
+        if rdtype == "MX":
+            raise NoAnswer("no mx")
+        return ["192.0.2.10"]
+
+    monkeypatch.setattr(email._resolver, "resolve", _resolve)
+    assert email.mx_records_exist("a-only.example.com") is True
+    assert calls == ["MX", "A"]
+
+
+def test_mx_records_exist_false_without_any_record(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    calls: list[str] = []
+
+    def _resolve(domain: str, rdtype: str) -> list[str]:
+        calls.append(rdtype)
+        raise NoAnswer(f"no {rdtype}")
+
+    monkeypatch.setattr(email._resolver, "resolve", _resolve)
+    assert email.mx_records_exist("empty.example.com") is False
+    assert calls == ["MX", "A", "AAAA"]
+
+
+def test_mx_records_exist_false_when_address_lookup_nxdomain(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+
+    def _resolve(domain: str, rdtype: str) -> list[str]:
+        if rdtype == "MX":
+            raise NoAnswer("no mx")
+        raise NXDOMAIN("domain does not exist")
+
+    monkeypatch.setattr(email._resolver, "resolve", _resolve)
+    assert email.mx_records_exist("vanishing.example.com") is False
 
 
 def test_has_valid_mx_true(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -322,14 +373,24 @@ def test_has_valid_mx_true(monkeypatch: pytest.MonkeyPatch) -> None:
     assert email.has_valid_mx("player@example.com") is True
 
 
-def test_has_valid_mx_false_when_no_mx(
+def test_has_valid_mx_false_when_domain_absent(
         monkeypatch: pytest.MonkeyPatch) -> None:
 
     def _raise(*args: object, **kwargs: object) -> None:
-        raise DNSException("no mx")
+        raise NXDOMAIN("domain does not exist")
 
     monkeypatch.setattr(email._resolver, "resolve", _raise)
     assert email.has_valid_mx("player@gmaill.com") is False
+
+
+def test_has_valid_mx_true_when_dns_fails(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+
+    def _raise(*args: object, **kwargs: object) -> None:
+        raise DNSException("resolver outage")
+
+    monkeypatch.setattr(email._resolver, "resolve", _raise)
+    assert email.has_valid_mx("player@example.com") is True
 
 
 def test_has_valid_mx_false_for_invalid_address(
@@ -342,6 +403,26 @@ def test_has_valid_mx_false_for_invalid_address(
     monkeypatch.setattr(email._resolver, "resolve", _fail)
     assert email.has_valid_mx("not-an-email") is False
     assert called["n"] == 0
+
+
+def test_configured_nameservers_empty(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("DNS_RESOLVERS", raising=False)
+    assert email._configured_nameservers() == []
+
+
+def test_configured_nameservers_from_env(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("DNS_RESOLVERS", " 1.1.1.1 , 8.8.8.8,")
+    assert email._configured_nameservers() == ["1.1.1.1", "8.8.8.8"]
+
+
+def test_build_resolver_uses_configured_nameservers(
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("DNS_RESOLVERS", "1.1.1.1,8.8.8.8")
+    resolver = email._build_resolver()
+    assert resolver.nameservers == ["1.1.1.1", "8.8.8.8"]
+    assert resolver.timeout == 4.0
+    assert resolver.lifetime == 8.0
 
 
 def test_split_email_invalid() -> None:

@@ -2,7 +2,7 @@ import uuid
 from datetime import UTC, datetime, timedelta
 
 import pytest
-from dns.exception import DNSException
+from dns.resolver import NXDOMAIN
 
 from app import db as db_mod
 from app import email
@@ -232,7 +232,7 @@ def test_signup_invalid_mx(api, monkeypatch: pytest.MonkeyPatch) -> None:
     _seed(application, "a1", 5)
 
     def _fail(*args: object, **kwargs: object) -> None:
-        raise DNSException("no mx")
+        raise NXDOMAIN("domain does not exist")
 
     monkeypatch.setattr(email._resolver, "resolve", _fail)
 

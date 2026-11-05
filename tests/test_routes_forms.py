@@ -1,5 +1,5 @@
 import pytest
-from dns.exception import DNSException
+from dns.resolver import NXDOMAIN
 from fastapi.testclient import TestClient
 
 from app import db as db_mod
@@ -216,7 +216,7 @@ def test_benevole_form_rejects_invalid_mx(api, monkeypatch: pytest.MonkeyPatch) 
     _, client, stub = api
 
     def _fail(*args: object, **kwargs: object) -> None:
-        raise DNSException("no mx")
+        raise NXDOMAIN("domain does not exist")
 
     monkeypatch.setattr(email._resolver, "resolve", _fail)
 

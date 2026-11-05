@@ -1,4 +1,5 @@
 import html
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Protocol
@@ -6,6 +7,7 @@ from typing import Protocol
 import httpx
 from dns import resolver as dns_resolver
 from dns.exception import DNSException
+from dns.resolver import NXDOMAIN, NoAnswer
 
 MAIL_URL = "https://api.resend.com/emails"
 SENDER_NAME = "À L'Abordajeux"
@@ -398,18 +400,55 @@ def split_email(address: str) -> tuple[str, str]:
     return local, domain
 
 
-_resolver = dns_resolver.Resolver()
-_resolver.timeout = 4.0
-_resolver.lifetime = 8.0
-_resolver.cache = dns_resolver.Cache()
+def _configured_nameservers() -> list[str]:
+    raw = os.environ.get("DNS_RESOLVERS", "")
+    return [item.strip() for item in raw.split(",") if item.strip()]
+
+
+def _build_resolver() -> dns_resolver.Resolver:
+    nameservers = _configured_nameservers()
+    resolver = dns_resolver.Resolver(configure=not nameservers)
+    if nameservers:
+        resolver.nameservers = nameservers
+    resolver.timeout = 4.0
+    resolver.lifetime = 8.0
+    resolver.cache = dns_resolver.Cache()
+    return resolver
+
+
+_resolver = _build_resolver()
+
+
+def _warn_dns_failure(domain: str, exc: BaseException) -> None:
+    print(f"mx lookup failed for {domain!r} ({exc}); accepting domain")
+
+
+def _address_record_exists(domain: str) -> bool:
+    for rdtype in ("A", "AAAA"):
+        try:
+            _resolver.resolve(domain, rdtype)
+            return True
+        except NXDOMAIN:
+            return False
+        except NoAnswer:
+            continue
+        except DNSException as exc:
+            _warn_dns_failure(domain, exc)
+            return True
+    return False
 
 
 def mx_records_exist(domain: str) -> bool:
     try:
         _resolver.resolve(domain, "MX")
-    except (DNSException, ValueError):
+        return True
+    except NXDOMAIN:
         return False
-    return True
+    except NoAnswer:
+        return _address_record_exists(domain)
+    except (DNSException, ValueError) as exc:
+        _warn_dns_failure(domain, exc)
+        return True
 
 
 def has_valid_mx(address: str) -> bool:
