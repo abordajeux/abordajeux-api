@@ -41,6 +41,8 @@ CAPACITY_EXCEEDED_MSG = (
 )
 INVALID_EMAIL_MSG = "Le domaine de votre adresse email semble invalide. Vérifiez votre saisie."
 RATE_LIMITED_MSG = "Trop de tentatives. Veuillez patienter quelques secondes avant de réessayer."
+MAIL_SEND_FAILED_MSG = (
+    "L'envoi de l'email a échoué. Veuillez réessayer dans un instant.")
 WAITLISTED_MSG = (
     "Cette activité est complète : vous avez été ajouté·e à la liste d'attente. "
     "Un email de confirmation vous a été envoyé à {email}.")
@@ -268,7 +270,19 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 participant_names=participant_names,
             )
             message = SIGNUP_OK_MSG.format(email=contact_email)
-        sender.send(to_email=contact_email, content=content)
+        try:
+            email.send_with_retry(sender,
+                                  to_email=contact_email,
+                                  content=content)
+        except email.MailSendError as exc:
+            print(f"verification email failed for {contact_email} "
+                  f"({activity_id}): {exc!r}; deleting pending signup")
+            signups.delete_pending_by_token(conn, token)
+            raise APIError(
+                502, {
+                    "status": "mail_send_failed",
+                    "message": MAIL_SEND_FAILED_MSG
+                }) from exc
         return SignupOk(message=message, waitlisted=result.waitlisted)
 
     @app.post("/verify", response_model=VerifyConfirmed)
@@ -297,11 +311,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             sender_email=str(body.sender_email),
             message=body.message,
         )
-        sender.send(
-            to_email=settings.mail_contact_email,
-            content=content,
-            reply_to=str(body.sender_email),
-        )
+        try:
+            email.send_with_retry(sender,
+                                  to_email=settings.mail_contact_email,
+                                  content=content,
+                                  reply_to=str(body.sender_email))
+        except email.MailSendError as exc:
+            print(f"contact form email failed: {exc!r}")
+            raise APIError(
+                502, {
+                    "status": "mail_send_failed",
+                    "message": MAIL_SEND_FAILED_MSG
+                }) from exc
         return FormOk(message=FORM_OK_MSG)
 
     @app.post("/forms/feedback", response_model=FormOk)
@@ -319,11 +340,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             planning_rating=body.planning_rating,
             welcome_rating=body.welcome_rating,
         )
-        sender.send(
-            to_email=settings.mail_contact_email,
-            content=content,
-            reply_to=str(body.sender_email),
-        )
+        try:
+            email.send_with_retry(sender,
+                                  to_email=settings.mail_contact_email,
+                                  content=content,
+                                  reply_to=str(body.sender_email))
+        except email.MailSendError as exc:
+            print(f"feedback form email failed: {exc!r}")
+            raise APIError(
+                502, {
+                    "status": "mail_send_failed",
+                    "message": MAIL_SEND_FAILED_MSG
+                }) from exc
         return FormOk(message=FORM_OK_MSG)
 
     @app.post("/forms/benevole", response_model=BenevoleOk)
@@ -348,18 +376,29 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             benevolus_org_link=settings.benevolus_org_link,
             benevolus_token=settings.benevolus_token,
         )
-        sender.send(
-            to_email=applicant_email,
-            content=welcome,
-            reply_to=coordinator_email,
-        )
+        try:
+            email.send_with_retry(sender,
+                                  to_email=applicant_email,
+                                  content=welcome,
+                                  reply_to=coordinator_email)
+        except email.MailSendError as exc:
+            print(f"benevole welcome email failed for {applicant_email}: "
+                  f"{exc!r}")
+            raise APIError(
+                502, {
+                    "status": "mail_send_failed",
+                    "message": MAIL_SEND_FAILED_MSG
+                }) from exc
         notification = email.build_benevole_notification_email(
             sender_email=applicant_email)
-        sender.send(
-            to_email=coordinator_email,
-            content=notification,
-            reply_to=applicant_email,
-        )
+        try:
+            email.send_with_retry(sender,
+                                  to_email=coordinator_email,
+                                  content=notification,
+                                  reply_to=applicant_email)
+        except email.MailSendError as exc:
+            print(f"benevole notification email failed for {applicant_email}: "
+                  f"{exc!r}; welcome email was already sent")
         return BenevoleOk(message=BENEVOLE_OK_MSG.format(
             email=applicant_email))
 

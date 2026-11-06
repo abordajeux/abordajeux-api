@@ -175,6 +175,9 @@ _SET_PROMOTED_BY_TOKEN_SQL = (
     "UPDATE signups SET promoted_at = CURRENT_TIMESTAMP "
     "WHERE verification_token = ? AND promoted_at IS NULL")
 
+_DELETE_PENDING_BY_TOKEN_SQL = (
+    "DELETE FROM signups WHERE verification_token = ? AND confirmed_at IS NULL")
+
 
 def confirm_by_token(conn: sqlite3.Connection, token: str) -> ConfirmOutcome:
     rows = conn.execute(_TOKEN_ROWS_SQL, (token, )).fetchall()
@@ -200,6 +203,17 @@ def confirm_by_token(conn: sqlite3.Connection, token: str) -> ConfirmOutcome:
     return ConfirmOutcome(status="confirmed",
                           activity_id=activity_id,
                           waitlisted=waitlisted)
+
+
+def delete_pending_by_token(conn: sqlite3.Connection, token: str) -> int:
+    conn.execute("BEGIN IMMEDIATE")
+    try:
+        cursor = conn.execute(_DELETE_PENDING_BY_TOKEN_SQL, (token, ))
+        conn.execute("COMMIT")
+    except BaseException:
+        conn.execute("ROLLBACK")
+        raise
+    return cursor.rowcount
 
 
 _PROMOTIONS_SQL = (

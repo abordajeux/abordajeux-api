@@ -1,5 +1,6 @@
 import html
 import os
+import time
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Protocol
@@ -355,6 +356,44 @@ class MailSender(Protocol):
              content: EmailContent,
              reply_to: str | None = None) -> None:
         ...
+
+
+class MailSendError(Exception):
+    pass
+
+
+_RETRYABLE_STATUSES = frozenset({429, 500, 502, 503, 504})
+_RETRY_DELAYS = (0.5, 1.0)
+
+
+def _is_retryable(exc: BaseException) -> bool:
+    if isinstance(exc, httpx.TransportError):
+        return True
+    return (isinstance(exc, httpx.HTTPStatusError)
+            and exc.response.status_code in _RETRYABLE_STATUSES)
+
+
+def send_with_retry(
+        sender: MailSender,
+        *,
+        to_email: str,
+        content: EmailContent,
+        reply_to: str | None = None,
+        attempts: int = 3,
+        delays: tuple[float, ...] = _RETRY_DELAYS) -> None:
+    if attempts < 1:
+        raise ValueError("attempts must be >= 1")
+    for attempt in range(attempts):
+        if attempt > 0:
+            time.sleep(delays[min(attempt - 1, len(delays) - 1)])
+        try:
+            sender.send(to_email=to_email, content=content, reply_to=reply_to)
+            return
+        except Exception as exc:
+            if not _is_retryable(exc):
+                raise MailSendError(str(exc)) from exc
+            last_error = exc
+    raise MailSendError(str(last_error)) from last_error
 
 
 class ResendSender:

@@ -1,11 +1,14 @@
 import uuid
 from datetime import UTC, datetime, timedelta
 
+import httpx
 import pytest
 from dns.resolver import NXDOMAIN
 
 from app import db as db_mod
 from app import email
+from app.email import EmailContent
+from app.main import get_mail_sender
 
 _VALID_BODY = {
     "contact_email": "player@example.com",
@@ -56,6 +59,22 @@ def _signup_row(application,
 def _extract_token(calls: list[tuple]) -> str:
     _, content, _ = calls[-1]
     return content.text.split("?token=")[1].split()[0]
+
+
+class _FailingSender:
+
+    def __init__(self, errors: list[BaseException]) -> None:
+        self._errors = list(errors)
+        self.calls = 0
+
+    def send(self,
+             *,
+             to_email: str,
+             content: EmailContent,
+             reply_to: str | None = None) -> None:
+        self.calls += 1
+        if self._errors:
+            raise self._errors.pop(0)
 
 
 def test_health(api) -> None:
@@ -137,6 +156,57 @@ def test_signup_ok_sends_email_and_reserves(api) -> None:
     ).fetchone()[0]
     conn.close()
     assert pending == 2
+
+
+def test_signup_mail_failure_returns_502_and_frees_seats(api) -> None:
+    application, client, stub = api
+    _seed(application, "a1", 1)
+    failing = _FailingSender([RuntimeError("provider down")])
+    application.dependency_overrides[get_mail_sender] = lambda: failing
+
+    response = client.post("/activities/a1/signup", json=_INDIVIDUAL_BODY)
+
+    assert response.status_code == 502
+    body = response.json()
+    assert body["status"] == "mail_send_failed"
+    assert "L'envoi de l'email a échoué" in body["message"]
+    assert failing.calls == 1
+
+    conn = db_mod.connect(application.state.settings.database_path)
+    pending = conn.execute(
+        "SELECT COUNT(*) FROM signups WHERE activity_id='a1'"
+    ).fetchone()[0]
+    conn.close()
+    assert pending == 0
+
+    application.dependency_overrides[get_mail_sender] = lambda: stub
+    retry = client.post("/activities/a1/signup",
+                        json=_INDIVIDUAL_BODY,
+                        headers={"CF-Connecting-IP": "198.51.100.9"})
+
+    assert retry.status_code == 200
+    assert client.get("/activities/a1").json()["pending"] == 1
+
+
+def test_signup_mail_recovers_on_retry(api) -> None:
+    application, client, _ = api
+    _seed(application, "a1", 5)
+    flaky = _FailingSender(
+        [httpx.ConnectError("temporary failure in name resolution")])
+    application.dependency_overrides[get_mail_sender] = lambda: flaky
+
+    response = client.post("/activities/a1/signup", json=_INDIVIDUAL_BODY)
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+    assert flaky.calls == 2
+
+    conn = db_mod.connect(application.state.settings.database_path)
+    pending = conn.execute(
+        "SELECT COUNT(*) FROM signups WHERE activity_id='a1'"
+    ).fetchone()[0]
+    conn.close()
+    assert pending == 1
 
 
 def test_signup_capacity_exceeded(api) -> None:

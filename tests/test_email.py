@@ -291,6 +291,90 @@ def test_mail_sender_propagates_http_errors() -> None:
         )
 
 
+class _FlakySender:
+
+    def __init__(self, errors: list[BaseException]) -> None:
+        self._errors = list(errors)
+        self.calls = 0
+
+    def send(self,
+             *,
+             to_email: str,
+             content: email.EmailContent,
+             reply_to: str | None = None) -> None:
+        self.calls += 1
+        if self._errors:
+            raise self._errors.pop(0)
+
+
+def _status_error(status_code: int) -> httpx.HTTPStatusError:
+    request = httpx.Request("POST", email.MAIL_URL)
+    response = httpx.Response(status_code, request=request)
+    return httpx.HTTPStatusError("boom", request=request, response=response)
+
+
+def test_send_with_retry_succeeds_after_transient_failure() -> None:
+    sender = _FlakySender([httpx.ConnectError("name resolution failed")])
+
+    email.send_with_retry(sender,
+                          to_email="player@example.com",
+                          content=email.EmailContent(subject="s", html="h", text="t"),
+                          delays=(0.0, ))
+
+    assert sender.calls == 2
+
+
+def test_send_with_retry_exhausts_attempts() -> None:
+    sender = _FlakySender([
+        httpx.ConnectError("boom 1"),
+        httpx.ConnectError("boom 2"),
+        httpx.ConnectError("boom 3"),
+        httpx.ConnectError("boom 4"),
+    ])
+
+    with pytest.raises(email.MailSendError):
+        email.send_with_retry(sender,
+                              to_email="player@example.com",
+                              content=email.EmailContent(subject="s", html="h", text="t"),
+                              delays=(0.0, 0.0))
+
+    assert sender.calls == 3
+
+
+def test_send_with_retry_fails_fast_on_permanent_error() -> None:
+    sender = _FlakySender([_status_error(422)])
+
+    with pytest.raises(email.MailSendError):
+        email.send_with_retry(sender,
+                              to_email="player@example.com",
+                              content=email.EmailContent(subject="s", html="h", text="t"),
+                              delays=(0.0, 0.0))
+
+    assert sender.calls == 1
+
+
+@pytest.mark.parametrize("status_code", [429, 500, 503])
+def test_send_with_retry_retries_retryable_status(status_code: int) -> None:
+    sender = _FlakySender([_status_error(status_code)])
+
+    email.send_with_retry(sender,
+                          to_email="player@example.com",
+                          content=email.EmailContent(subject="s", html="h", text="t"),
+                          delays=(0.0, ))
+
+    assert sender.calls == 2
+
+
+def test_send_with_retry_rejects_zero_attempts() -> None:
+    sender = _FlakySender([])
+
+    with pytest.raises(ValueError):
+        email.send_with_retry(sender,
+                              to_email="player@example.com",
+                              content=email.EmailContent(subject="s", html="h", text="t"),
+                              attempts=0)
+
+
 def test_mx_records_exist_true(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(email._resolver, "resolve",
                         lambda *a, **k: ["mx1.example.com"])

@@ -2,6 +2,9 @@ services:
   api:
     build: .
     container_name: abordajeux_api
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     env_file: .env
     restart: unless-stopped
     ports:

@@ -284,3 +284,76 @@ def test_benevole_notification_falls_back_to_contact_email(tmp_path) -> None:
     assert to_emails == ["visitor@example.com", "contact@test.local"]
     assert stub.calls[0][2] == "contact@test.local"
     assert stub.calls[1][2] == "visitor@example.com"
+
+
+class _FailingSender:
+
+    def __init__(self, errors: list[BaseException]) -> None:
+        self._errors = list(errors)
+        self.calls = 0
+
+    def send(self,
+             *,
+             to_email: str,
+             content: EmailContent,
+             reply_to: str | None = None) -> None:
+        self.calls += 1
+        if self._errors:
+            raise self._errors.pop(0)
+
+
+class _FailingForRecipient:
+
+    def __init__(self, *, fail_for: str) -> None:
+        self._fail_for = fail_for
+        self.calls = 0
+
+    def send(self,
+             *,
+             to_email: str,
+             content: EmailContent,
+             reply_to: str | None = None) -> None:
+        self.calls += 1
+        if to_email == self._fail_for:
+            raise RuntimeError("provider down")
+
+
+def test_contact_form_mail_failure_returns_502(api) -> None:
+    application, client, _ = api
+    failing = _FailingSender([RuntimeError("provider down")])
+    application.dependency_overrides[get_mail_sender] = lambda: failing
+
+    response = client.post("/forms/contact", json=_CONTACT_BODY)
+
+    assert response.status_code == 502
+    body = response.json()
+    assert body["status"] == "mail_send_failed"
+    assert "L'envoi de l'email a échoué" in body["message"]
+    assert failing.calls == 1
+
+
+def test_benevole_welcome_failure_returns_502(api) -> None:
+    application, client, _ = api
+    failing = _FailingSender([RuntimeError("provider down")])
+    application.dependency_overrides[get_mail_sender] = lambda: failing
+
+    response = client.post("/forms/benevole", json=_BENEVOLE_BODY)
+
+    assert response.status_code == 502
+    body = response.json()
+    assert body["status"] == "mail_send_failed"
+    assert "L'envoi de l'email a échoué" in body["message"]
+    assert failing.calls == 1
+
+
+def test_benevole_notification_failure_still_returns_ok(api) -> None:
+    application, client, _ = api
+    selective = _FailingForRecipient(fail_for="benevoles@test.local")
+    application.dependency_overrides[get_mail_sender] = lambda: selective
+
+    response = client.post("/forms/benevole", json=_BENEVOLE_BODY)
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "ok"
+    assert selective.calls == 2
