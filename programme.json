@@ -19,16 +19,17 @@
         "Il y aura de 3 - 5 rondes Suisses (selon le nombre de participants), suivies d'un top 8." ,
         "Les portes ouvrent à 10h, et le tournoi commence à 10h30.",
         "Une decklist papier vous sera demandée au début du tournoi.",
+        "Les proxies imprimés de bonne qualité sont autorisés pour ce tournoi.",
         "Une pause repas de 30 minutes aura lieu après la deuxième ronde."
       ],
       "organizer": ["MTG Neuch'", ""],
       "image_path": "presque/mtgneuch_pauper.jpg",
       "prizes": {
-        "Exemple de répartition à 32 joueur.euses": "",
-        "1er": "environ 25% du prize pool",
-        "2ème": "environ 20% du prize pool",
-        "3-4": "environ 12% du prize pool chacun.e",
-        "5-8": "le reste"
+        "Prize pool prévu à 32 joueur.euses": "",
+        "1er": "4 Misty Rainfores",
+        "2ème": "4 Marsch Flats",
+        "3-4": "2 Polluted Delta et 1 Bloodstained Mire chacun.e",
+        "5-8": "1 Verdant Catacomb chacun.e"
       }
     },
     {
