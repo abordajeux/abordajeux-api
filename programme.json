@@ -600,10 +600,13 @@
       "end": "2026-11-14T14:30:00+01:00",
       "max_participants": 5,
       "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
-      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "post_img_description": [
+        "Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle.",
+        "Dans Donjons et Chatons, vous incarnerez des chatons aventuriers, avide de découvrir un monde fantastique et parfois presque dangereux."
+      ],
       "organizer": ["Philippe", ""],
       "image_path": "presque/initiation_dnd_samedi_12h30.jpg",
-      "game":"Initiation"
+      "game":"Donjons et Chatons"
     },
     {
       "id": "presque-2026-initiation-jdr-sam-1430",
@@ -614,10 +617,13 @@
       "end": "2026-11-14T16:30:00+01:00",
       "max_participants": 5,
       "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
-      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "post_img_description": [
+        "Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle.",
+        "Dans Donjons et Chatons, vous incarnerez des chatons aventuriers, avide de découvrir un monde fantastique et parfois presque dangereux."
+      ],
       "organizer": ["Philippe", ""],
       "image_path": "presque/initiation_dnd_samedi_14h30.jpg",
-      "game":"Initiation"
+      "game":"Donjons et Chatons"
     },
     {
       "id": "presque-2026-initiation-jdr-dim-0900",
@@ -628,10 +634,13 @@
       "end": "2026-11-15T11:00:00+01:00",
       "max_participants": 5,
       "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
-      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "post_img_description": [
+        "Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle.",
+        "Dans Donjons et Chatons, vous incarnerez des chatons aventuriers, avide de découvrir un monde fantastique et parfois presque dangereux."
+      ],
       "organizer": ["Philippe", ""],
       "image_path": "presque/initiation_dnd_dimanche_9h.jpg",
-      "game":"Initiation"
+      "game":"Donjons et Chatons"
     },
     {
       "id": "presque-2026-initiation-jdr-dim-1100",
@@ -642,10 +651,13 @@
       "end": "2026-11-15T13:00:00+01:00",
       "max_participants": 5,
       "pre_img_description": ["Je n'ai pas encore reçu le synopsis, mais on me garantit une aventure trépidante pleine de rebondissements. Dès que j'en sais plus, je vous tiens au courant."],
-      "post_img_description": ["Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle."],
+      "post_img_description": [
+        "Cette aventure est dédiée à un public familial, avec le but avoué d'exister pour permettre aux enfants de découvrir le jeu de rôle.",
+        "Dans Donjons et Chatons, vous incarnerez des chatons aventuriers, avide de découvrir un monde fantastique et parfois presque dangereux."
+      ],
       "organizer": ["Philippe", ""],
       "image_path": "presque/initiation_dnd_dimanche_11h.jpg",
-      "game":"Initiation"
+      "game":"Donjons et Chatons"
     },
     {
       "id": "presque-2026-gros-jeux-black-rose-wars",
